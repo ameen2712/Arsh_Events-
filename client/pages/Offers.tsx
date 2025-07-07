@@ -78,9 +78,9 @@ export default function Offers() {
         onOpenBooking={() => setIsBookingModalOpen(true)}
       />
 
-      <div className="pt-36">
+      <div>
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-background to-muted/20">
+        <section className="pt-36 pb-1 bg-gradient-to-br from-background to-muted/20">
           <div className="container mx-auto px-6">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -113,7 +113,7 @@ export default function Offers() {
         </section>
 
         {/* Offers Grid */}
-        <section className="py-20">
+        <section className="py-20 -mt-px">
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {offers.map((offer, index) => (
