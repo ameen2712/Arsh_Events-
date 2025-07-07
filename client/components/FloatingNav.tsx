@@ -198,9 +198,9 @@ export default function FloatingNav({
           pointerEvents: isMobileMenuOpen ? "auto" : "none",
         }}
         transition={{ duration: 0.3 }}
-        className="md:hidden fixed top-40 left-1/2 transform -translate-x-1/2 z-30 w-full max-w-sm px-6"
+        className="lg:hidden fixed top-28 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-sm px-6"
       >
-        <div className="glass rounded-2xl p-6 space-y-4">
+        <div className="glass rounded-2xl p-6 space-y-4 shadow-cinematic">
           {navItems.map((item, index) => (
             <motion.a
               key={item.label}
@@ -212,13 +212,13 @@ export default function FloatingNav({
               transition={{ delay: index * 0.1 }}
               href={item.href}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="block py-3 px-4 rounded-lg text-foreground/80 hover:text-cinematic-purple hover:bg-cinematic-purple/5 transition-all duration-300"
+              className="block py-4 px-4 rounded-lg text-foreground/80 hover:text-cinematic-purple hover:bg-cinematic-purple/5 transition-all duration-300 text-lg font-medium"
             >
               {item.label}
             </motion.a>
           ))}
 
-          <div className="pt-4 space-y-3">
+          <div className="pt-4 space-y-3 border-t border-white/20">
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{
@@ -230,7 +230,7 @@ export default function FloatingNav({
                 onOpenContact();
                 setIsMobileMenuOpen(false);
               }}
-              className="w-full glass py-3 rounded-lg text-foreground/80 hover:text-cinematic-purple transition-all duration-300"
+              className="w-full glass py-4 rounded-lg text-foreground/80 hover:text-cinematic-purple transition-all duration-300 font-medium"
             >
               Contact Us
             </motion.button>
@@ -246,7 +246,7 @@ export default function FloatingNav({
                 onOpenBooking();
                 setIsMobileMenuOpen(false);
               }}
-              className="w-full bg-gradient-to-r from-cinematic-purple to-cinematic-gold text-white py-3 rounded-lg font-semibold"
+              className="w-full bg-gradient-to-r from-cinematic-purple to-cinematic-gold text-white py-4 rounded-lg font-semibold"
             >
               Let's Create Magic
             </motion.button>
