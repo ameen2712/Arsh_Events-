@@ -100,7 +100,7 @@ export default function PageLoadAnimation({
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-yellow-600"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black"
         >
           {/* Animated background particles */}
           <div className="absolute inset-0 overflow-hidden">
@@ -132,29 +132,26 @@ export default function PageLoadAnimation({
             {/* Logo */}
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
-              animate={
-                loadingStage === "logo"
-                  ? { scale: 1, opacity: 1 }
-                  : { scale: 0, opacity: 0 }
-              }
+              animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="mb-8"
             >
               <div className="flex items-center justify-center gap-4">
-                <AnimatedLogo size="lg" autoAnimate={true} />
+                <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg flex items-center justify-center">
+                  <span className="text-black font-black text-2xl">A</span>
+                </div>
                 <motion.div
                   initial={{ x: -50, opacity: 0 }}
-                  animate={
-                    loadingStage === "logo"
-                      ? { x: 0, opacity: 1 }
-                      : { x: -50, opacity: 0 }
-                  }
+                  animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.3, duration: 0.6 }}
                 >
-                  <h1 className="text-4xl font-heading font-bold text-white mb-2">
+                  <h1
+                    className="text-4xl font-heading font-bold text-white mb-2"
+                    style={{ fontFamily: "Cinzel Decorative, serif" }}
+                  >
                     Arsh Events
                   </h1>
-                  <p className="text-cinematic-gold font-signature">
+                  <p className="text-yellow-400 font-signature">
                     Legendary Celebrations
                   </p>
                 </motion.div>
@@ -174,11 +171,7 @@ export default function PageLoadAnimation({
                 animate={{ opacity: 1 }}
                 className="text-xl text-white/80 mb-2"
               >
-                {loadingStage === "initial"
-                  ? "Preparing your magical experience..."
-                  : loadingStage === "logo"
-                    ? "Crafting extraordinary moments..."
-                    : "Welcome to Arsh Events!"}
+                Preparing your magical experience...
               </motion.h2>
 
               {/* Loading dots animation */}
@@ -236,10 +229,10 @@ export default function PageLoadAnimation({
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 1 }}
+                  transition={{ delay: 0.1 }}
                   className="mt-2 text-center"
                 >
-                  <span className="text-sm text-white/60">
+                  <span className="text-sm text-white font-semibold">
                     {Math.round(progress)}%
                   </span>
                 </motion.div>
