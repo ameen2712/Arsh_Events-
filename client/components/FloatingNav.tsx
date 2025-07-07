@@ -61,7 +61,7 @@ export default function FloatingNav({
     { label: "Events We Plan", href: "/services", isRoute: true },
     { label: "Themes & Décor", href: "/themes", isRoute: true },
     { label: "Venues", href: "/venues", isRoute: true },
-    { label: "Offers", href: "#offers", isRoute: false },
+    { label: "Offers", href: "/offers", isRoute: true },
     { label: "Gallery", href: "#gallery", isRoute: false },
     { label: "Contact Us", href: "#contact", isRoute: false },
   ];
