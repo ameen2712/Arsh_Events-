@@ -32,7 +32,7 @@ export default function FloatingNav({
 }: FloatingNavProps) {
   const [isHidden, setIsHidden] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [selectedCity, setSelectedCity] = useState("Select Your City");
   const [selectedEvent, setSelectedEvent] = useState("Select Event Type");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -215,8 +215,8 @@ export default function FloatingNav({
         onOpenBooking={onOpenBooking}
       />
 
-      {/* Spacer to prevent content overlap - 128px total (64px + 64px) */}
-      <div className="h-32" />
+      {/* Spacer to prevent content overlap - 144px total (64px + 80px) */}
+      <div className="h-36" />
     </>
   );
 }

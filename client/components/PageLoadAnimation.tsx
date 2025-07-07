@@ -100,7 +100,7 @@ export default function PageLoadAnimation({
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-cinematic-midnight via-cinematic-purple to-cinematic-gold"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-yellow-600"
         >
           {/* Animated background particles */}
           <div className="absolute inset-0 overflow-hidden">
@@ -122,7 +122,7 @@ export default function PageLoadAnimation({
                   repeat: Infinity,
                   ease: "easeOut",
                 }}
-                className="absolute w-1 h-1 bg-cinematic-gold rounded-full"
+                className="absolute w-1 h-1 bg-yellow-400 rounded-full"
               />
             ))}
           </div>
@@ -217,7 +217,7 @@ export default function PageLoadAnimation({
                     initial={{ width: "0%" }}
                     animate={{ width: `${progress}%` }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="h-full bg-gradient-to-r from-cinematic-gold to-cinematic-rose rounded-full relative"
+                    className="h-full bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full relative"
                   >
                     {/* Shimmer effect */}
                     <motion.div

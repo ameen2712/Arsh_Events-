@@ -113,11 +113,23 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 112px; /* Account for fixed navbar height */
+    scroll-padding-top: 144px; /* Account for fixed navbar height */
   }
 
   * {
     scroll-behavior: smooth;
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  /* Smooth scrolling performance improvements */
+  * {
+    -webkit-overflow-scrolling: touch;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
   }
 
   body {
