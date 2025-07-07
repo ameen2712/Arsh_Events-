@@ -140,6 +140,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.3 }}
           className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed"
+          style={{ fontFamily: "Poppins, sans-serif" }}
         >
           Where dreams transform into cinematic celebrations across{" "}
           <span className="text-cinematic-gold">Guntur</span>,{" "}
