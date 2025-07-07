@@ -20,6 +20,7 @@ import { EnhancedDropdown, themePreviewData } from "./LivePreviewTooltip";
 import { GlassDropdown } from "./EnhancedGlass";
 import EnhancedMobileMenu from "./EnhancedMobileMenu";
 import { NavbarEntranceAnimation, NavItemEntrance } from "./PageLoadAnimation";
+import { Link } from "react-router-dom";
 
 interface FloatingNavProps {
   onOpenContact: () => void;
@@ -56,13 +57,13 @@ export default function FloatingNav({
   }, [isDarkMode]);
 
   const navItems = [
-    { label: "Home", href: "#home" },
-    { label: "Events We Plan", href: "#services", hasDropdown: true },
-    { label: "Themes & Décor", href: "#themes", hasDropdown: true },
-    { label: "Venues", href: "#venues", hasDropdown: true },
-    { label: "Offers", href: "#offers" },
-    { label: "Gallery", href: "#gallery" },
-    { label: "Contact Us", href: "#contact" },
+    { label: "Home", href: "/", isRoute: true },
+    { label: "Events We Plan", href: "/services", isRoute: true },
+    { label: "Themes & Décor", href: "/themes", isRoute: true },
+    { label: "Venues", href: "/venues", isRoute: true },
+    { label: "Offers", href: "#offers", isRoute: false },
+    { label: "Gallery", href: "#gallery", isRoute: false },
+    { label: "Contact Us", href: "#contact", isRoute: false },
   ];
 
   const cities = ["Guntur", "Hyderabad", "Vijayawada"];
@@ -185,23 +186,39 @@ export default function FloatingNav({
           <div className="flex items-center justify-center h-16">
             {/* Desktop Navigation - Centered */}
             <nav className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="group relative text-card-foreground hover:text-primary transition-all duration-300 font-medium flex items-center gap-1"
-                  style={{ fontFamily: "Poppins, sans-serif" }}
-                >
-                  <span>{item.label}</span>
-                  {item.hasDropdown && <ChevronDown size={14} />}
+              {navItems.map((item) =>
+                item.isRoute ? (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    className="group relative text-card-foreground hover:text-primary transition-all duration-300 font-medium flex items-center gap-1"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
+                    <span>{item.label}</span>
 
-                  {/* Primary color underline on hover */}
-                  <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                    {/* Primary color underline on hover */}
+                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
 
-                  {/* Glow effect */}
-                  <div className="absolute inset-0 bg-primary/10 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 -mx-2 -my-1" />
-                </a>
-              ))}
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 bg-primary/10 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 -mx-2 -my-1" />
+                  </Link>
+                ) : (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="group relative text-card-foreground hover:text-primary transition-all duration-300 font-medium flex items-center gap-1"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
+                    <span>{item.label}</span>
+
+                    {/* Primary color underline on hover */}
+                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 bg-primary/10 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 -mx-2 -my-1" />
+                  </a>
+                ),
+              )}
             </nav>
           </div>
         </div>
