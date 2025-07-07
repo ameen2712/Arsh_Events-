@@ -111,34 +111,42 @@ export default function FloatingNav({
             animate={isHidden ? "hidden" : "visible"}
             initial={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed top-0 w-full bg-black z-50 border-b border-gray-800"
+            className="fixed top-0 w-full bg-background border-b border-border z-50"
           >
             <div className="container mx-auto px-4 sm:px-6">
-              <div className="flex items-center justify-between h-12 text-sm">
-                {/* Left side - Logo for mobile */}
-                <div className="flex items-center md:hidden">
-                  <AnimatedLogo size="sm" />
-                  <span className="text-white font-bold ml-2">Arsh Events</span>
-                </div>
+              <div className="flex items-center justify-between h-16 text-sm">
+                {/* Left side spacer */}
+                <div className="w-24"></div>
+
+                {/* Center - Brand Logo (clickable for theme toggle) */}
+                <motion.div
+                  onClick={() => setIsDarkMode(!isDarkMode)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-3 cursor-pointer"
+                >
+                  <AnimatedLogo size="md" />
+                  <div>
+                    <h1
+                      className="text-2xl font-bold text-foreground"
+                      style={{ fontFamily: "Cinzel Decorative, serif" }}
+                    >
+                      Arsh Events
+                    </h1>
+                    <p className="text-xs text-primary font-signature">
+                      Legendary Celebrations
+                    </p>
+                  </div>
+                </motion.div>
 
                 {/* Right side - Actions */}
-                <div className="flex items-center gap-4 ml-auto">
-                  {/* Search Icon */}
-                  <motion.button
-                    onClick={() => setIsSearchOpen(true)}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="text-gray-300 hover:text-cinematic-gold transition-colors p-1"
-                  >
-                    <Search size={16} />
-                  </motion.button>
-
+                <div className="flex items-center gap-4">
                   {/* Dark Mode Toggle */}
                   <motion.button
                     onClick={() => setIsDarkMode(!isDarkMode)}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="text-gray-300 hover:text-cinematic-gold transition-colors p-1"
+                    className="text-muted-foreground hover:text-primary transition-colors p-1 hidden md:block"
                   >
                     {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
                   </motion.button>
@@ -148,7 +156,7 @@ export default function FloatingNav({
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="md:hidden text-gray-300 hover:text-white transition-colors p-1"
+                    className="text-muted-foreground hover:text-foreground transition-colors p-1"
                   >
                     {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
                   </motion.button>
