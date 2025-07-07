@@ -94,7 +94,7 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <h4 className="text-xl font-heading font-bold mb-6 text-luxury-gold">
+            <h4 className="text-xl font-semibold mb-6 text-foreground">
               Quick Links
             </h4>
             <ul className="space-y-3">
@@ -106,8 +106,9 @@ export default function Footer() {
                 >
                   <a
                     href={link.href}
-                    className="text-gray-300 hover:text-luxury-peach transition-colors duration-200 font-body"
+                    className="text-muted-foreground hover:text-primary transition-colors duration-200 flex items-center gap-2 group"
                   >
+                    <div className="w-1 h-1 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
                     {link.label}
                   </a>
                 </motion.li>
