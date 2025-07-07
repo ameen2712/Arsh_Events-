@@ -12,6 +12,7 @@ import ScrollProgressGlow from "../components/ScrollProgressGlow";
 import FloatingActionButton from "../components/FloatingActionButton";
 import DynamicBackground from "../components/DynamicBackground";
 import { BackgroundSparkles } from "../components/DecorativeDividers";
+import ClientStories from "../components/ClientStories";
 
 export default function Index() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
