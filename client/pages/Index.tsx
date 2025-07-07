@@ -1,9 +1,9 @@
-import { useState } from "react";
-import BrandNavbar from "../components/BrandNavbar";
-import MainNavbar from "../components/MainNavbar";
-import HeroQuoteSection from "../components/HeroQuoteSection";
+import { useState, useEffect } from "react";
+import FloatingNav from "../components/FloatingNav";
+import HeroSection from "../components/HeroSection";
 import CityCards from "../components/CityCards";
-import EventSection from "../components/EventSection";
+import EventStories from "../components/EventStories";
+import ThemesCarousel from "../components/ThemesCarousel";
 import ContactModal from "../components/ContactModal";
 import BookingFormModal from "../components/BookingFormModal";
 import Footer from "../components/Footer";
@@ -12,27 +12,70 @@ export default function Index() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
+  // Smooth scrolling setup
+  useEffect(() => {
+    const handleSmoothScroll = (e: Event) => {
+      const target = e.target as HTMLAnchorElement;
+      if (target.href && target.href.includes("#")) {
+        e.preventDefault();
+        const id = target.href.split("#")[1];
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+      }
+    };
+
+    document.addEventListener("click", handleSmoothScroll);
+    return () => document.removeEventListener("click", handleSmoothScroll);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <BrandNavbar />
-      <MainNavbar
+    <div className="min-h-screen bg-background relative overflow-x-hidden">
+      {/* Floating Navigation */}
+      <FloatingNav
         onOpenContact={() => setIsContactModalOpen(true)}
         onOpenBooking={() => setIsBookingModalOpen(true)}
       />
 
       {/* Main Content */}
       <main>
-        <section id="home">
-          <HeroQuoteSection />
+        {/* Hero Section */}
+        <section id="home" className="relative">
+          <HeroSection onOpenBooking={() => setIsBookingModalOpen(true)} />
         </section>
 
-        <section id="cities">
+        {/* Cities Section */}
+        <section id="cities" className="relative">
           <CityCards />
         </section>
 
-        <section id="services">
-          <EventSection />
+        {/* Event Stories Section */}
+        <section id="services" className="relative">
+          <EventStories />
+        </section>
+
+        {/* Themes Gallery Section */}
+        <section id="themes" className="relative">
+          <ThemesCarousel />
+        </section>
+
+        {/* Testimonials placeholder for future implementation */}
+        <section id="testimonials" className="py-32 text-center">
+          <div className="container mx-auto px-6">
+            <div className="glass rounded-3xl p-16">
+              <h2 className="text-4xl font-heading font-bold text-cinematic-purple mb-6">
+                Client Stories Coming Soon
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                We're crafting beautiful testimonials to showcase the magical
+                moments we've created for our amazing clients
+              </p>
+            </div>
+          </div>
         </section>
       </main>
 
@@ -48,6 +91,23 @@ export default function Index() {
         isOpen={isBookingModalOpen}
         onClose={() => setIsBookingModalOpen(false)}
       />
+
+      {/* Background Elements */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* Floating Orbs */}
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div
+            key={i}
+            className={`absolute w-64 h-64 rounded-full bg-gradient-to-br from-cinematic-purple/5 to-cinematic-gold/5 blur-3xl animate-float${i % 3 === 0 ? "" : i % 3 === 1 ? "-delayed" : ""}`}
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${i * 2}s`,
+              animationDuration: `${8 + i * 2}s`,
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 }
