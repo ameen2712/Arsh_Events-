@@ -40,13 +40,13 @@
 
     --radius: 1rem;
 
-    /* Cinematic Color System */
-    --cinematic-purple: 260 85% 60%; /* Main brand purple */
-    --cinematic-gold: 45 95% 65%; /* Luxury gold */
+    /* Cinematic Blue Color System */
+    --cinematic-purple: 210 100% 56%; /* Ocean Blue */
+    --cinematic-gold: 200 100% 70%; /* Sky Blue */
     --cinematic-midnight: 220 25% 8%; /* Deep midnight */
-    --cinematic-rose: 340 75% 75%; /* Rose gold */
-    --cinematic-blush: 350 85% 85%; /* Soft blush */
-    --cinematic-sky: 200 85% 65%; /* Deep sky */
+    --cinematic-rose: 190 85% 75%; /* Aqua Blue */
+    --cinematic-blush: 200 80% 85%; /* Light Blue */
+    --cinematic-sky: 215 85% 65%; /* Deep sky blue */
     --cinematic-glass: 0 0% 100% / 0.1; /* Glass overlay */
 
     --sidebar-background: 0 0% 98%;
