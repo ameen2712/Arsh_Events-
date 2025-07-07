@@ -52,6 +52,12 @@ const cities: City[] = [
     ],
     priceRange: "₹2L - ₹8L",
     featured: ["Palace Gardens", "Heritage Hotels", "Lakeside Venues"],
+    eventTypes: ["Birthday", "Wedding", "Engagement", "Corporate"],
+    gallery: [
+      "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&h=300&fit=crop",
+    ],
   },
   {
     name: "Vijayawada",
