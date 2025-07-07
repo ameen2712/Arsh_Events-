@@ -303,74 +303,120 @@ export default function FloatingNav({
         </ContextAwareNav>
       </NavbarEntranceAnimation>
 
-      {/* Third Tier - Event Booking Bar */}
-      <motion.div
-        variants={{
-          visible: { y: 0, opacity: 1 },
-          hidden: { y: -100, opacity: 0 },
-        }}
-        animate={isHidden ? "hidden" : "visible"}
-        initial={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, ease: "easeInOut", delay: 0.2 }}
-        className="fixed top-28 w-full bg-gray-700/95 backdrop-blur-sm z-30 border-b border-gray-600"
-      >
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-center h-14 gap-4">
-            {/* City Selector */}
-            <div className="relative">
-              <select
-                value={selectedCity}
-                onChange={(e) => setSelectedCity(e.target.value)}
-                className="bg-gray-600 text-white border border-gray-500 rounded-lg px-4 py-2 pr-8 appearance-none cursor-pointer hover:bg-gray-500 transition-colors min-w-40"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                <option disabled>Select Your City</option>
-                {cities.map((city) => (
-                  <option key={city} value={city}>
-                    {city}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-300 pointer-events-none"
-                size={16}
-              />
-            </div>
+      {/* Third Tier - Enhanced Booking Bar with Glassmorphism */}
+      <NavbarEntranceAnimation delay={0.2}>
+        <motion.div
+          variants={{
+            visible: { y: 0, opacity: 1 },
+            hidden: { y: -100, opacity: 0 },
+          }}
+          animate={isHidden ? "hidden" : "visible"}
+          initial={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.3, ease: "easeInOut", delay: 0.2 }}
+          className="fixed top-28 w-full z-30"
+        >
+          <div className="container mx-auto px-4 sm:px-6">
+            <GlassDropdown className="mx-auto max-w-4xl">
+              <div className="flex items-center justify-center h-14 gap-4 px-6">
+                {/* City Selector with Glass Effect */}
+                <div className="relative">
+                  <select
+                    value={selectedCity}
+                    onChange={(e) => setSelectedCity(e.target.value)}
+                    className="glass text-white border border-white/20 rounded-xl px-4 py-2 pr-8 appearance-none cursor-pointer hover:bg-white/10 transition-all duration-300 min-w-40 backdrop-blur-md"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
+                    <option disabled className="bg-gray-800">
+                      Select Your City
+                    </option>
+                    {cities.map((city) => (
+                      <option key={city} value={city} className="bg-gray-800">
+                        {city}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white/70 pointer-events-none"
+                    size={16}
+                  />
+                </div>
 
-            {/* Event Type Selector */}
-            <div className="relative">
-              <select
-                value={selectedEvent}
-                onChange={(e) => setSelectedEvent(e.target.value)}
-                className="bg-gray-600 text-white border border-gray-500 rounded-lg px-4 py-2 pr-8 appearance-none cursor-pointer hover:bg-gray-500 transition-colors min-w-40"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                <option disabled>Select Event Type</option>
-                {eventTypes.map((event) => (
-                  <option key={event} value={event}>
-                    {event}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-300 pointer-events-none"
-                size={16}
-              />
-            </div>
+                {/* Event Type Selector with Glass Effect */}
+                <div className="relative">
+                  <select
+                    value={selectedEvent}
+                    onChange={(e) => setSelectedEvent(e.target.value)}
+                    className="glass text-white border border-white/20 rounded-xl px-4 py-2 pr-8 appearance-none cursor-pointer hover:bg-white/10 transition-all duration-300 min-w-40 backdrop-blur-md"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
+                    <option disabled className="bg-gray-800">
+                      Select Event Type
+                    </option>
+                    {eventTypes.map((event) => (
+                      <option key={event} value={event} className="bg-gray-800">
+                        {event}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white/70 pointer-events-none"
+                    size={16}
+                  />
+                </div>
 
-            {/* Book Now Button */}
-            <motion.button
-              onClick={onOpenBooking}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white px-8 py-2 rounded-lg font-semibold transition-all duration-300 shadow-lg"
-              style={{ fontFamily: "Poppins, sans-serif" }}
-            >
-              Book Now
-            </motion.button>
+                {/* Enhanced Book Now Button with Magnetic Effect */}
+                <motion.button
+                  ref={bookingButtonMagnetic.ref}
+                  style={{
+                    x: bookingButtonMagnetic.x,
+                    y: bookingButtonMagnetic.y,
+                  }}
+                  onClick={onOpenBooking}
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: "0 8px 30px rgba(236, 72, 153, 0.4)",
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-gradient-to-r from-cinematic-purple via-pink-500 to-cinematic-gold text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg relative overflow-hidden group"
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
+                  {/* Shimmer effect */}
+                  <motion.div
+                    animate={{
+                      x: ["-100%", "100%"],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      repeatDelay: 3,
+                    }}
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12"
+                  />
+                  <span className="relative z-10">✨ Book Now</span>
+                </motion.button>
+              </div>
+            </GlassDropdown>
           </div>
-        </div>
-      </motion.div>
+
+          {/* Curved transition to hero */}
+          <div className="relative">
+            <svg
+              viewBox="0 0 1200 120"
+              className="w-full h-8 text-gray-800/50"
+              preserveAspectRatio="none"
+            >
+              <motion.path
+                d="M0,50 Q600,120 1200,50 L1200,120 L0,120 Z"
+                fill="currentColor"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
+              />
+            </svg>
+          </div>
+        </motion.div>
+      </NavbarEntranceAnimation>
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
