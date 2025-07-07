@@ -10,6 +10,16 @@ import {
   Sun,
   Moon,
 } from "lucide-react";
+import AnimatedLogo from "./AnimatedLogo";
+import SmartSearchModal from "./SmartSearchModal";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { DecorativeDivider, NavDivider } from "./DecorativeDividers";
+import { useMagneticHover } from "../hooks/useMagneticHover";
+import ContextAwareNav from "./ContextAwareNav";
+import { EnhancedDropdown, themePreviewData } from "./LivePreviewTooltip";
+import { GlassDropdown } from "./EnhancedGlass";
+import EnhancedMobileMenu from "./EnhancedMobileMenu";
+import { NavbarEntranceAnimation, NavItemEntrance } from "./PageLoadAnimation";
 
 interface FloatingNavProps {
   onOpenContact: () => void;
