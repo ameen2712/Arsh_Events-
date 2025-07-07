@@ -13,6 +13,9 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import FloatingNav from "../components/FloatingNav";
+import ContactModal from "../components/ContactModal";
+import BookingFormModal from "../components/BookingFormModal";
 
 const venueCategories = [
   {
@@ -181,6 +184,8 @@ export default function Venues() {
     (typeof featuredVenues)[0] | null
   >(null);
   const [activeCategory, setActiveCategory] = useState("All");
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
   const filteredVenues =
     activeCategory === "All"
@@ -190,7 +195,14 @@ export default function Venues() {
         );
 
   return (
-    <div className="min-h-screen bg-background pt-36">
+    <div className="min-h-screen bg-background">
+      {/* Floating Navigation */}
+      <FloatingNav
+        onOpenContact={() => setIsContactModalOpen(true)}
+        onOpenBooking={() => setIsBookingModalOpen(true)}
+      />
+
+      <div className="pt-36">
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-background to-muted/20">
         <div className="container mx-auto px-6">
