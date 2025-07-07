@@ -11,43 +11,43 @@
   */
   :root {
     --background: 0 0% 100%;
-    --foreground: 220 15% 15%;
+    --foreground: 0 0% 0%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 15%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 15%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 260 85% 60%;
+    --primary: 214 100% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 95%;
-    --secondary-foreground: 220 15% 15%;
+    --secondary: 210 40% 95%;
+    --secondary-foreground: 0 0% 0%;
 
-    --muted: 220 15% 95%;
-    --muted-foreground: 220 15% 45%;
+    --muted: 210 40% 95%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 220 15% 95%;
-    --accent-foreground: 220 15% 15%;
+    --accent: 214 100% 50%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 85% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 90%;
-    --input: 220 15% 90%;
-    --ring: 260 85% 60%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 214 100% 50%;
 
     --radius: 1rem;
 
-    /* Cinematic Blue Color System */
-    --cinematic-purple: 210 100% 56%; /* Ocean Blue */
-    --cinematic-gold: 200 100% 70%; /* Sky Blue */
-    --cinematic-midnight: 220 25% 8%; /* Deep midnight */
-    --cinematic-rose: 190 85% 75%; /* Aqua Blue */
-    --cinematic-blush: 200 80% 85%; /* Light Blue */
-    --cinematic-sky: 215 85% 65%; /* Deep sky blue */
-    --cinematic-glass: 0 0% 100% / 0.1; /* Glass overlay */
+    /* Light Mode - Blue Primary System */
+    --cinematic-purple: 214 100% 50%; /* Primary Blue */
+    --cinematic-gold: 214 100% 50%; /* Blue accent */
+    --cinematic-midnight: 0 0% 100%; /* White background */
+    --cinematic-rose: 214 100% 60%; /* Lighter blue */
+    --cinematic-blush: 214 100% 95%; /* Very light blue */
+    --cinematic-sky: 214 100% 70%; /* Sky blue */
+    --cinematic-glass: 214 100% 50% / 0.1; /* Blue glass overlay */
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 220 15% 25%;
