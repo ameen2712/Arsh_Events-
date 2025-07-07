@@ -113,6 +113,11 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 112px; /* Account for fixed navbar height */
+  }
+
+  * {
+    scroll-behavior: smooth;
   }
 
   body {
