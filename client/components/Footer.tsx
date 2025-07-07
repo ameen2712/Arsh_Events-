@@ -153,46 +153,64 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
           >
-            <h4 className="text-xl font-heading font-bold mb-6 text-luxury-gold">
+            <h4 className="text-xl font-semibold mb-6 text-foreground">
               Get In Touch
             </h4>
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <MapPin className="text-luxury-peach mt-1" size={18} />
+                <MapPin className="text-primary mt-1" size={18} />
                 <div>
-                  <p className="text-gray-300 font-body">
+                  <p className="text-foreground">
                     Guntur, Vijayawada, Hyderabad
                   </p>
-                  <p className="text-gray-400 text-sm">Andhra Pradesh, India</p>
+                  <p className="text-muted-foreground text-sm">
+                    Andhra Pradesh, India
+                  </p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone className="text-luxury-peach" size={18} />
-                <span className="text-gray-300 font-body">+91 98765 43210</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Mail className="text-luxury-peach" size={18} />
-                <span className="text-gray-300 font-body">
-                  hello@arshevents.com
-                </span>
-              </div>
+              <motion.a
+                href="tel:+918919836337"
+                className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group"
+                whileHover={{ x: 5 }}
+              >
+                <Phone className="text-primary" size={18} />
+                <span>+91 89198 36337</span>
+              </motion.a>
+              <motion.a
+                href="https://wa.me/918919836337"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group"
+                whileHover={{ x: 5 }}
+              >
+                <MessageCircle className="text-primary" size={18} />
+                <span>WhatsApp Us</span>
+              </motion.a>
+              <motion.a
+                href="mailto:hello@arshevents.com"
+                className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group"
+                whileHover={{ x: 5 }}
+              >
+                <Mail className="text-primary" size={18} />
+                <span>hello@arshevents.com</span>
+              </motion.a>
             </div>
 
             {/* Newsletter */}
-            <div className="mt-6">
-              <h5 className="font-brand font-semibold mb-3">
-                Subscribe to Our Newsletter
+            <div className="mt-8">
+              <h5 className="font-semibold mb-3 text-foreground">
+                Stay Updated
               </h5>
               <div className="flex gap-2">
                 <input
                   type="email"
                   placeholder="Your email"
-                  className="flex-1 px-3 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-luxury-gold"
+                  className="flex-1 px-3 py-2 bg-muted border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-luxury-gold text-luxury-midnight px-4 py-2 rounded-lg font-brand font-semibold hover:bg-luxury-peach transition-colors duration-200"
+                  className="bg-primary text-primary-foreground px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity duration-200"
                 >
                   Subscribe
                 </motion.button>
