@@ -29,6 +29,8 @@ interface City {
   specialties: string[];
   priceRange: string;
   featured: string[];
+  eventTypes: string[];
+  gallery: string[];
 }
 
 const cities: City[] = [
