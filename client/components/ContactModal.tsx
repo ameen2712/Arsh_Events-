@@ -103,7 +103,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   <div>
                     <p className="font-brand font-semibold text-sm">Email</p>
                     <p className="text-gray-600 text-xs">
-                      hello@elysianevents.com
+                      hello@arshevents.com
                     </p>
                   </div>
                 </div>
