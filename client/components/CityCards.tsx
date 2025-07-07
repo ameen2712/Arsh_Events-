@@ -367,6 +367,7 @@ export default function CityCards() {
 
                       {/* CTA Button */}
                       <motion.button
+                        onClick={() => handleCityClick(city)}
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
                         className="w-full bg-gradient-to-r from-cinematic-gold to-cinematic-purple text-white py-4 rounded-2xl font-semibold flex items-center justify-center gap-2 shadow-glow"
