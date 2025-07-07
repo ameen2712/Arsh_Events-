@@ -60,42 +60,42 @@
   }
 
   .dark {
-    --background: 220 25% 8%;
-    --foreground: 0 0% 95%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
 
-    --card: 220 25% 10%;
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 220 25% 10%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 260 85% 70%;
-    --primary-foreground: 220 25% 8%;
+    --primary: 45 100% 50%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 220 25% 15%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 25% 15%;
+    --muted: 0 0% 10%;
     --muted-foreground: 0 0% 65%;
 
-    --accent: 220 25% 15%;
-    --accent-foreground: 0 0% 95%;
+    --accent: 45 100% 50%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 85% 70%;
-    --destructive-foreground: 220 25% 8%;
+    --destructive-foreground: 0 0% 0%;
 
-    --border: 220 25% 20%;
-    --input: 220 25% 20%;
-    --ring: 260 85% 70%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 45 100% 50%;
 
-    /* Dark mode blue colors */
-    --cinematic-purple: 210 100% 70%;
-    --cinematic-gold: 200 100% 80%;
-    --cinematic-midnight: 220 25% 5%;
-    --cinematic-rose: 190 85% 80%;
-    --cinematic-blush: 200 80% 90%;
-    --cinematic-sky: 215 85% 75%;
-    --cinematic-glass: 0 0% 0% / 0.2;
+    /* Dark Mode - Gold Primary System */
+    --cinematic-purple: 45 100% 50%; /* Gold */
+    --cinematic-gold: 45 100% 50%; /* Gold accent */
+    --cinematic-midnight: 0 0% 0%; /* Black background */
+    --cinematic-rose: 45 100% 60%; /* Lighter gold */
+    --cinematic-blush: 45 100% 95%; /* Very light gold */
+    --cinematic-sky: 45 100% 70%; /* Bright gold */
+    --cinematic-glass: 0 0% 100% / 0.1; /* White glass overlay */
 
     --sidebar-background: 220 25% 8%;
     --sidebar-foreground: 0 0% 95%;
