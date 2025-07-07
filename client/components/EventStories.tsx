@@ -151,6 +151,7 @@ export default function EventStories() {
               transition={{ duration: 0.6, delay: index * 0.2 }}
               viewport={{ once: true }}
               className="flex-shrink-0 w-[90vw] md:w-[70vw] lg:w-[60vw] relative"
+              style={{ scrollSnapAlign: "start" }}
             >
               <div
                 className={`relative min-h-[80vh] rounded-3xl overflow-hidden bg-gradient-to-br ${event.bgGradient} shadow-cinematic`}
