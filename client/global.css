@@ -88,13 +88,13 @@
     --input: 220 25% 20%;
     --ring: 260 85% 70%;
 
-    /* Dark mode cinematic colors */
-    --cinematic-purple: 260 85% 70%;
-    --cinematic-gold: 45 95% 75%;
+    /* Dark mode blue colors */
+    --cinematic-purple: 210 100% 70%;
+    --cinematic-gold: 200 100% 80%;
     --cinematic-midnight: 220 25% 5%;
-    --cinematic-rose: 340 75% 80%;
-    --cinematic-blush: 350 85% 90%;
-    --cinematic-sky: 200 85% 75%;
+    --cinematic-rose: 190 85% 80%;
+    --cinematic-blush: 200 80% 90%;
+    --cinematic-sky: 215 85% 75%;
     --cinematic-glass: 0 0% 0% / 0.2;
 
     --sidebar-background: 220 25% 8%;
