@@ -16,6 +16,8 @@ import { BackgroundSparkles } from "../components/DecorativeDividers";
 export default function Index() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Smooth scrolling setup
   useEffect(() => {
