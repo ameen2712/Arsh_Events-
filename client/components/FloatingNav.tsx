@@ -35,7 +35,12 @@ export default function FloatingNav({
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [selectedCity, setSelectedCity] = useState("Select Your City");
   const [selectedEvent, setSelectedEvent] = useState("Select Event Type");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { scrollY } = useScroll();
+
+  // Magnetic hover effects
+  const bookingButtonMagnetic = useMagneticHover({ strength: 0.3 });
+  const searchButtonMagnetic = useMagneticHover({ strength: 0.2 });
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
@@ -62,6 +67,30 @@ export default function FloatingNav({
 
   const cities = ["Guntur", "Hyderabad", "Vijayawada"];
   const eventTypes = ["Birthday", "Marriage", "Corporate", "Engagement"];
+
+  const themeItems = [
+    { id: "luxury", label: "Luxury Royal", previewKey: "luxury" },
+    { id: "vintage", label: "Vintage Rustic", previewKey: "vintage" },
+    { id: "modern", label: "Contemporary Modern", previewKey: "modern" },
+    { id: "garden", label: "Garden Paradise", previewKey: "garden" },
+    { id: "beach", label: "Coastal Elegance", previewKey: "beach" },
+  ];
+
+  const eventPlanItems = [
+    { id: "wedding", label: "Wedding Ceremonies" },
+    { id: "corporate", label: "Corporate Events" },
+    { id: "birthday", label: "Birthday Celebrations" },
+    { id: "engagement", label: "Engagement Parties" },
+    { id: "anniversary", label: "Anniversary Celebrations" },
+  ];
+
+  const venueItems = [
+    { id: "hotels", label: "Luxury Hotels" },
+    { id: "banquet", label: "Banquet Halls" },
+    { id: "outdoor", label: "Outdoor Venues" },
+    { id: "beach", label: "Beachfront Locations" },
+    { id: "heritage", label: "Heritage Properties" },
+  ];
 
   return (
     <>
