@@ -99,7 +99,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
         >
           <div className="h-px bg-gradient-to-r from-transparent via-cinematic-gold to-transparent w-20" />
           <span className="text-cinematic-gold/80 font-signature tracking-wider">
-            Arsh Events - Legendary Celebrations
+            Arsh Events – Legendary Celebrations
           </span>
           <div className="h-px bg-gradient-to-r from-transparent via-cinematic-gold to-transparent w-20" />
         </motion.div>
@@ -110,6 +110,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.7 }}
           className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-white leading-tight mb-8"
+          style={{ fontFamily: "Playfair Display, serif" }}
         >
           We don't just <span className="text-shimmer">plan events</span>
           <br />
