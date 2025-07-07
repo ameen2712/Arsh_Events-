@@ -106,13 +106,30 @@ export default function FloatingNav({
             isAtTop ? "bg-white/5 py-3" : "bg-white/10 py-4"
           } shadow-cinematic`}
         >
-          <div className="flex items-center justify-between px-6">
-            {/* Desktop Navigation */}
+          <div className="flex items-center justify-center px-6 relative">
+            {/* Contact Button - Desktop Left */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.8 }}
+              className="hidden md:block absolute left-6"
+            >
+              <motion.button
+                onClick={onOpenContact}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="glass px-6 py-3 rounded-full text-foreground/80 hover:text-cinematic-purple transition-all duration-300 font-medium"
+              >
+                Contact
+              </motion.button>
+            </motion.div>
+
+            {/* Desktop Navigation - Centered */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, staggerChildren: 0.1 }}
-              className="hidden md:flex items-center space-x-8 mx-auto"
+              className="hidden md:flex items-center space-x-8"
             >
               {navItems.map((item, index) => (
                 <motion.a
@@ -142,7 +159,7 @@ export default function FloatingNav({
               ))}
             </motion.div>
 
-            {/* Book Now CTA - Always visible on desktop */}
+            {/* Book Now CTA - Desktop Right */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -154,7 +171,7 @@ export default function FloatingNav({
                 whileHover={{
                   scale: 1.05,
                   y: -2,
-                  boxShadow: "0 0 30px rgba(139, 92, 246, 0.4)",
+                  boxShadow: "0 0 30px rgba(30, 144, 255, 0.4)",
                 }}
                 whileTap={{ scale: 0.95 }}
                 className="relative overflow-hidden bg-gradient-to-r from-cinematic-purple to-cinematic-gold text-white px-8 py-3 rounded-full font-semibold animate-pulse-glow"
@@ -168,29 +185,12 @@ export default function FloatingNav({
               </motion.button>
             </motion.div>
 
-            {/* Contact Button - Desktop */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.8 }}
-              className="hidden md:block absolute left-6"
-            >
-              <motion.button
-                onClick={onOpenContact}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="glass px-6 py-3 rounded-full text-foreground/80 hover:text-cinematic-purple transition-all duration-300 font-medium"
-              >
-                Contact
-              </motion.button>
-            </motion.div>
-
             {/* Mobile Menu Button */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden glass p-3 rounded-full mx-auto"
+              className="md:hidden glass p-3 rounded-full"
             >
               <motion.div
                 animate={{ rotate: isMobileMenuOpen ? 180 : 0 }}
