@@ -1,6 +1,6 @@
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X, Sparkles, Sun, Moon } from "lucide-react";
 
 interface FloatingNavProps {
   onOpenContact: () => void;
@@ -14,6 +14,7 @@ export default function FloatingNav({
   const [isHidden, setIsHidden] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -21,6 +22,14 @@ export default function FloatingNav({
     setIsHidden(latest > previous && latest > 150);
     setIsAtTop(latest < 50);
   });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDarkMode]);
 
   const navItems = [
     { label: "Home", href: "#home" },
@@ -36,61 +45,31 @@ export default function FloatingNav({
       <motion.div
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
         className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50"
       >
-        <motion.div
-          className={`glass rounded-full px-8 py-4 transition-all duration-500 ${
-            isAtTop ? "bg-white/5" : "bg-white/10"
-          } shadow-floating`}
-        >
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center gap-4"
-          >
-            {/* Animated Logo */}
-            <div className="relative">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, ease: "linear", repeat: Infinity }}
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 p-0.5"
-              >
-                <div className="w-full h-full bg-background rounded-full flex items-center justify-center">
-                  <Sparkles className="text-blue-500" size={20} />
-                </div>
-              </motion.div>
-              <motion.div
-                animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 3, repeat: Infinity }}
-                className="absolute inset-0 rounded-full bg-blue-500/20 blur-sm"
-              />
+        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-8 py-4 shadow-lg">
+          <div className="flex items-center gap-4">
+            {/* Logo */}
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+              <Sparkles className="text-white" size={20} />
             </div>
 
             {/* Brand Text */}
             <div>
-              <motion.h1
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 }}
-                className="text-2xl font-signature font-bold text-shimmer"
-              >
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-blue-600 bg-clip-text text-transparent">
                 Arsh Events
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.7 }}
-                className="text-xs text-muted-foreground tracking-wider"
-              >
+              </h1>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
                 Legendary Moments
-              </motion.p>
+              </p>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </motion.div>
 
       {/* Main Navigation Navbar (Below Brand) */}
-      <motion.nav
+      <motion.div
         variants={{
           visible: { y: 0, opacity: 1 },
           hidden: { y: -100, opacity: 0 },
@@ -98,175 +77,128 @@ export default function FloatingNav({
         animate={isHidden ? "hidden" : "visible"}
         initial={{ y: -50, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-        className="fixed top-20 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-5xl px-6"
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="fixed top-20 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-4xl px-6"
       >
-        <div
-          className={`glass rounded-2xl transition-all duration-500 ${
-            isAtTop ? "bg-white/5 py-3" : "bg-white/10 py-4"
-          } shadow-cinematic`}
-        >
-          <div className="flex items-center justify-center px-6 relative">
-            {/* Contact Button - Desktop Left */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.8 }}
-              className="hidden md:block absolute left-6"
+        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl px-8 py-4 shadow-lg">
+          {/* Desktop Layout */}
+          <div className="hidden md:flex items-center justify-between">
+            {/* Contact Button */}
+            <button
+              onClick={onOpenContact}
+              className="bg-white/10 hover:bg-white/20 px-6 py-2 rounded-full text-gray-700 dark:text-gray-300 transition-all duration-300"
             >
-              <motion.button
-                onClick={onOpenContact}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="glass px-6 py-3 rounded-full text-foreground/80 hover:text-cinematic-purple transition-all duration-300 font-medium"
-              >
-                Contact
-              </motion.button>
-            </motion.div>
+              Contact
+            </button>
 
-            {/* Desktop Navigation - Centered */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, staggerChildren: 0.1 }}
-              className="hidden md:flex items-center space-x-8"
-            >
-              {navItems.map((item, index) => (
-                <motion.a
+            {/* Navigation Links - Centered */}
+            <div className="flex items-center space-x-8">
+              {navItems.map((item) => (
+                <a
                   key={item.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
                   href={item.href}
-                  className="relative group"
+                  className="text-gray-700 dark:text-gray-300 hover:text-blue-500 transition-colors duration-300 font-medium"
                 >
-                  <span className="text-foreground/80 hover:text-cinematic-purple transition-all duration-300 font-medium text-lg">
-                    {item.label}
-                  </span>
-                  <motion.div
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-cinematic-purple to-cinematic-gold rounded-full"
-                    initial={{ scaleX: 0 }}
-                    whileHover={{ scaleX: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  <motion.div
-                    className="absolute inset-0 bg-cinematic-purple/5 rounded-lg -z-10 -mx-2 -my-1"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileHover={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.2 }}
-                  />
-                </motion.a>
+                  {item.label}
+                </a>
               ))}
-            </motion.div>
+            </div>
 
-            {/* Book Now CTA - Desktop Right */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.8 }}
-              className="hidden md:block absolute right-6"
-            >
-              <motion.button
-                onClick={onOpenBooking}
-                whileHover={{
-                  scale: 1.05,
-                  y: -2,
-                  boxShadow: "0 0 30px rgba(30, 144, 255, 0.4)",
-                }}
-                whileTap={{ scale: 0.95 }}
-                className="relative overflow-hidden bg-gradient-to-r from-cinematic-purple to-cinematic-gold text-white px-8 py-3 rounded-full font-semibold animate-pulse-glow"
+            {/* Right Side - Theme Toggle & Book Now */}
+            <div className="flex items-center gap-4">
+              {/* Dark Mode Toggle */}
+              <button
+                onClick={() => setIsDarkMode(!isDarkMode)}
+                className="bg-white/10 hover:bg-white/20 p-2 rounded-full text-gray-700 dark:text-gray-300 transition-all duration-300"
               >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-cinematic-gold to-cinematic-purple opacity-0"
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-                <span className="relative">Book Now</span>
-              </motion.button>
-            </motion.div>
+                {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
+
+              {/* Book Now Button */}
+              <button
+                onClick={onOpenBooking}
+                className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg"
+              >
+                Book Now
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Layout */}
+          <div className="md:hidden flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              {/* Dark Mode Toggle Mobile */}
+              <button
+                onClick={() => setIsDarkMode(!isDarkMode)}
+                className="bg-white/10 hover:bg-white/20 p-2 rounded-full text-gray-700 dark:text-gray-300"
+              >
+                {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
+
+              <span className="text-gray-700 dark:text-gray-300 font-medium">
+                Menu
+              </span>
+            </div>
 
             {/* Mobile Menu Button */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden glass p-3 rounded-full"
+              className="bg-white/10 hover:bg-white/20 p-3 rounded-full text-gray-700 dark:text-gray-300"
             >
-              <motion.div
-                animate={{ rotate: isMobileMenuOpen ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-              </motion.div>
-            </motion.button>
-          </div>
-        </div>
-      </motion.nav>
-
-      {/* Mobile Menu */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{
-          opacity: isMobileMenuOpen ? 1 : 0,
-          scale: isMobileMenuOpen ? 1 : 0.95,
-          pointerEvents: isMobileMenuOpen ? "auto" : "none",
-        }}
-        transition={{ duration: 0.3 }}
-        className="md:hidden fixed top-36 left-1/2 transform -translate-x-1/2 z-30 w-full max-w-sm px-6"
-      >
-        <div className="glass rounded-2xl p-6 space-y-4 shadow-cinematic">
-          {navItems.map((item, index) => (
-            <motion.a
-              key={item.label}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{
-                opacity: isMobileMenuOpen ? 1 : 0,
-                x: isMobileMenuOpen ? 0 : -20,
-              }}
-              transition={{ delay: index * 0.1 }}
-              href={item.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block py-4 px-4 rounded-lg text-foreground/80 hover:text-cinematic-purple hover:bg-cinematic-purple/5 transition-all duration-300 text-lg font-medium"
-            >
-              {item.label}
-            </motion.a>
-          ))}
-
-          <div className="pt-4 space-y-3 border-t border-white/20">
-            <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{
-                opacity: isMobileMenuOpen ? 1 : 0,
-                y: isMobileMenuOpen ? 0 : 20,
-              }}
-              transition={{ delay: 0.3 }}
-              onClick={() => {
-                onOpenContact();
-                setIsMobileMenuOpen(false);
-              }}
-              className="w-full glass py-4 rounded-lg text-foreground/80 hover:text-cinematic-purple transition-all duration-300 font-medium"
-            >
-              Contact Us
-            </motion.button>
-
-            <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{
-                opacity: isMobileMenuOpen ? 1 : 0,
-                y: isMobileMenuOpen ? 0 : 20,
-              }}
-              transition={{ delay: 0.4 }}
-              onClick={() => {
-                onOpenBooking();
-                setIsMobileMenuOpen(false);
-              }}
-              className="w-full bg-gradient-to-r from-cinematic-purple to-cinematic-gold text-white py-4 rounded-lg font-semibold"
-            >
-              Let's Create Magic
-            </motion.button>
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
           </div>
         </div>
       </motion.div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          className="md:hidden fixed top-36 left-1/2 transform -translate-x-1/2 z-30 w-full max-w-sm px-6"
+        >
+          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-lg">
+            {/* Mobile Navigation Links */}
+            <div className="space-y-4">
+              {navItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block py-3 px-4 text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-white/10 rounded-lg transition-all duration-300"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+
+            {/* Mobile Action Buttons */}
+            <div className="pt-4 mt-4 border-t border-white/20 space-y-3">
+              <button
+                onClick={() => {
+                  onOpenContact();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full bg-white/10 hover:bg-white/20 py-3 rounded-lg text-gray-700 dark:text-gray-300 transition-all duration-300"
+              >
+                Contact Us
+              </button>
+
+              <button
+                onClick={() => {
+                  onOpenBooking();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-3 rounded-lg font-semibold transition-all duration-300"
+              >
+                Book Now
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      )}
     </>
   );
 }
