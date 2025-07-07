@@ -2,6 +2,9 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Palette, Crown, Heart, Star, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import FloatingNav from "../components/FloatingNav";
+import ContactModal from "../components/ContactModal";
+import BookingFormModal from "../components/BookingFormModal";
 
 const themeCategories = [
   {
@@ -180,6 +183,8 @@ export default function Themes() {
     (typeof featuredThemes)[0] | null
   >(null);
   const [activeCategory, setActiveCategory] = useState("All");
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
   const filteredThemes =
     activeCategory === "All"
@@ -187,7 +192,14 @@ export default function Themes() {
       : featuredThemes.filter((theme) => theme.category === activeCategory);
 
   return (
-    <div className="min-h-screen bg-background pt-36">
+    <div className="min-h-screen bg-background">
+      {/* Floating Navigation */}
+      <FloatingNav
+        onOpenContact={() => setIsContactModalOpen(true)}
+        onOpenBooking={() => setIsBookingModalOpen(true)}
+      />
+
+      <div className="pt-36">
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-background to-muted/20">
         <div className="container mx-auto px-6">
