@@ -5,11 +5,13 @@ import { Calendar, X, Phone, MessageCircle, Mail } from "lucide-react";
 interface FloatingActionButtonProps {
   onBooking: () => void;
   onContact: () => void;
+  isHidden?: boolean;
 }
 
 export default function FloatingActionButton({
   onBooking,
   onContact,
+  isHidden = false,
 }: FloatingActionButtonProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -110,7 +112,7 @@ export default function FloatingActionButton({
 
   return (
     <AnimatePresence>
-      {isVisible && (
+      {isVisible && !isHidden && (
         <div className="fixed bottom-6 right-6 z-50">
           {/* Action buttons */}
           <AnimatePresence>
