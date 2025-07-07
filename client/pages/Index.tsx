@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import FloatingNav from "../components/FloatingNav";
 import HeroSection from "../components/HeroSection";
 import CityCards from "../components/CityCards";
-import EventStories from "../components/EventStories";
-import ThemesCarousel from "../components/ThemesCarousel";
 import ContactModal from "../components/ContactModal";
 import BookingFormModal from "../components/BookingFormModal";
 import Footer from "../components/Footer";
@@ -85,16 +83,6 @@ export default function Index() {
             {/* Cities Section */}
             <section id="cities" className="relative" data-context="default">
               <CityCards />
-            </section>
-
-            {/* Event Stories Section */}
-            <section id="services" className="relative" data-context="wedding">
-              <EventStories />
-            </section>
-
-            {/* Themes Gallery Section */}
-            <section id="themes" className="relative" data-context="engagement">
-              <ThemesCarousel />
             </section>
 
             {/* Client Stories Section */}
