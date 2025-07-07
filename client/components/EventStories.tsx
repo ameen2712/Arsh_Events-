@@ -126,14 +126,22 @@ export default function EventStories() {
           </h2>
 
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Discover how we transform ordinary moments into extraordinary
-            experiences across every celebration
+            Discover how we transform ordinary moments into extraordinary experiences across every celebration
           </p>
         </motion.div>
       </div>
 
       {/* Horizontal Scroll Container */}
-      <motion.div style={{ x }} className="flex gap-8">
+      <div className="relative">
+        <div
+          className="flex gap-8 overflow-x-auto scroll-smooth pb-4"
+          style={{
+            scrollSnapType: 'x mandatory',
+            WebkitOverflowScrolling: 'touch',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
         {eventTypes.map((event, index) => (
           <motion.div
             key={event.title}
