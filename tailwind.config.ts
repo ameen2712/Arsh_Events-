@@ -13,6 +13,11 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        heading: ["Playfair Display", "serif"],
+        brand: ["Poppins", "sans-serif"],
+        body: ["Roboto", "sans-serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -47,6 +52,15 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Luxury Events Color Palette
+        luxury: {
+          purple: "hsl(var(--luxury-purple))",
+          gold: "hsl(var(--luxury-gold))",
+          midnight: "hsl(var(--luxury-midnight))",
+          peach: "hsl(var(--luxury-peach))",
+          silver: "hsl(var(--luxury-silver))",
+          blush: "hsl(var(--luxury-blush))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -80,10 +94,36 @@ export default {
             height: "0",
           },
         },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        sparkle: {
+          "0%, 100%": { opacity: "0", transform: "scale(0)" },
+          "50%": { opacity: "1", transform: "scale(1)" },
+        },
+        slideDown: {
+          "0%": { transform: "translateY(-100%)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        "pulse-glow": {
+          "0%, 100%": { boxShadow: "0 0 5px hsl(var(--luxury-gold))" },
+          "50%": {
+            boxShadow:
+              "0 0 20px hsl(var(--luxury-gold)), 0 0 30px hsl(var(--luxury-gold))",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        float: "float 3s ease-in-out infinite",
+        sparkle: "sparkle 2s ease-in-out infinite",
+        slideDown: "slideDown 0.6s ease-out",
+        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+      },
+      backdropBlur: {
+        xs: "2px",
       },
     },
   },
