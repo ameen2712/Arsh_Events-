@@ -418,70 +418,13 @@ export default function FloatingNav({
         </motion.div>
       </NavbarEntranceAnimation>
 
-      {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            className="fixed right-0 top-0 h-full w-80 bg-gray-900 shadow-xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-6">
-              {/* Mobile Header */}
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-xl font-bold text-white">Menu</h2>
-                <button
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-gray-300 hover:text-white"
-                >
-                  <X size={24} />
-                </button>
-              </div>
-
-              {/* Mobile Navigation */}
-              <nav className="space-y-4">
-                {navItems.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block py-3 px-4 text-white hover:text-yellow-400 hover:bg-gray-800 rounded-lg transition-all duration-300"
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </nav>
-
-              {/* Mobile Actions */}
-              <div className="mt-8 pt-8 border-t border-gray-700 space-y-4">
-                <button className="w-full text-left py-3 px-4 text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-all duration-300">
-                  Login
-                </button>
-                <button className="w-full text-left py-3 px-4 text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-all duration-300">
-                  Sign Up
-                </button>
-                <button
-                  onClick={() => {
-                    onOpenContact();
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white py-3 rounded-lg font-semibold"
-                >
-                  Contact Us
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
+      {/* Enhanced Mobile Menu */}
+      <EnhancedMobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        onOpenContact={onOpenContact}
+        onOpenBooking={onOpenBooking}
+      />
 
       {/* Spacer to prevent content overlap */}
       <div className="h-42" />
