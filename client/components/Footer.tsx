@@ -70,9 +70,7 @@ export default function Footer() {
                   E
                 </span>
               </div>
-              <h3 className="text-2xl font-heading font-bold">
-                Elysian Events
-              </h3>
+              <h3 className="text-2xl font-heading font-bold">Arsh Events</h3>
             </div>
             <p className="text-gray-300 font-body leading-relaxed">
               Creating magical moments and unforgettable celebrations across
