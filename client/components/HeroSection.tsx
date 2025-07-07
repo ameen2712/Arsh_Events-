@@ -29,7 +29,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-28"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32"
     >
       {/* Background Video/Image with Parallax */}
       <motion.div style={{ y, scale }} className="absolute inset-0 z-0">
