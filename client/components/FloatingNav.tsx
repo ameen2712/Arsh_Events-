@@ -53,16 +53,16 @@ export default function FloatingNav({
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, ease: "linear", repeat: Infinity }}
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-cinematic-purple to-cinematic-gold p-0.5"
+                className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 p-0.5"
               >
                 <div className="w-full h-full bg-background rounded-full flex items-center justify-center">
-                  <Sparkles className="text-cinematic-purple" size={20} />
+                  <Sparkles className="text-blue-500" size={20} />
                 </div>
               </motion.div>
               <motion.div
                 animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
                 transition={{ duration: 3, repeat: Infinity }}
-                className="absolute inset-0 rounded-full bg-cinematic-purple/20 blur-sm"
+                className="absolute inset-0 rounded-full bg-blue-500/20 blur-sm"
               />
             </div>
 
