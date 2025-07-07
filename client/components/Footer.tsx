@@ -123,7 +123,7 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h4 className="text-xl font-heading font-bold mb-6 text-luxury-gold">
+            <h4 className="text-xl font-semibold mb-6 text-foreground">
               Our Services
             </h4>
             <ul className="space-y-3">
@@ -132,8 +132,15 @@ export default function Footer() {
                   key={index}
                   whileHover={{ x: 5 }}
                   transition={{ duration: 0.2 }}
+                  className="flex items-center gap-2 group"
                 >
-                  <span className="text-gray-300 font-body">{service}</span>
+                  <Heart
+                    className="text-primary opacity-60 group-hover:opacity-100 transition-opacity"
+                    size={12}
+                  />
+                  <span className="text-muted-foreground group-hover:text-foreground transition-colors">
+                    {service}
+                  </span>
                 </motion.li>
               ))}
             </ul>
