@@ -205,12 +205,12 @@
   }
 
   /* Glow effects */
-  .glow-purple {
-    box-shadow: 0 0 30px hsl(var(--cinematic-purple) / 0.3);
+  .glow-blue {
+    box-shadow: 0 0 30px hsl(210 100% 56% / 0.3);
   }
 
-  .glow-gold {
-    box-shadow: 0 0 30px hsl(var(--cinematic-gold) / 0.3);
+  .glow-sky {
+    box-shadow: 0 0 30px hsl(200 100% 70% / 0.3);
   }
 
   /* 3D card styles */
