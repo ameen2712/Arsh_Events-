@@ -225,38 +225,51 @@ export default function Footer() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
-          className="border-t border-white/20 pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
+          className="border-t border-border pt-8"
         >
-          <div className="text-center md:text-left">
-            <p className="text-gray-400 font-body">
-              © 2024 Arsh Events. All rights reserved. Crafted with ❤️ for your
-              special moments.
-            </p>
-            <motion.a
-              href="https://www.linkedin.com/in/ameen-ahammad-mohammad-252418192/"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.05 }}
-              className="inline-block mt-2 text-cinematic-gold hover:text-yellow-300 transition-colors duration-300 text-sm relative group"
-            >
-              Made by Ameen 💼
-              <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-cinematic-gold to-yellow-300 scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
-            </motion.a>
-          </div>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="text-center md:text-left">
+              <p className="text-muted-foreground mb-2">
+                © 2024 Arsh Events. All rights reserved. Crafted with ❤️ for
+                your special moments.
+              </p>
+              <motion.a
+                href="https://www.linkedin.com/in/ameen-ahammad-mohammad-252418192/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-all duration-300 font-medium relative group"
+              >
+                <span>Made by Ameen</span>
+                <motion.span
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  💼
+                </motion.span>
+                <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-primary/60 scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+              </motion.a>
+            </div>
 
-          <div className="flex items-center gap-6">
-            <a
-              href="#"
-              className="text-gray-400 hover:text-luxury-peach transition-colors duration-200 text-sm"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="#"
-              className="text-gray-400 hover:text-luxury-peach transition-colors duration-200 text-sm"
-            >
-              Terms of Service
-            </a>
+            <div className="flex items-center gap-6">
+              <a
+                href="#"
+                className="text-muted-foreground hover:text-primary transition-colors duration-200 text-sm"
+              >
+                Privacy Policy
+              </a>
+              <a
+                href="#"
+                className="text-muted-foreground hover:text-primary transition-colors duration-200 text-sm"
+              >
+                Terms of Service
+              </a>
+            </div>
           </div>
         </motion.div>
       </div>
