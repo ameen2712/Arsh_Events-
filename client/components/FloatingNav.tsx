@@ -196,62 +196,112 @@ export default function FloatingNav({
         </ContextAwareNav>
       </NavbarEntranceAnimation>
 
-      {/* Second Tier Navbar - Charcoal Grey with Pattern */}
-      <motion.div
-        variants={{
-          visible: { y: 0, opacity: 1 },
-          hidden: { y: -100, opacity: 0 },
-        }}
-        animate={isHidden ? "hidden" : "visible"}
-        initial={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, ease: "easeInOut", delay: 0.1 }}
-        className="fixed top-12 w-full bg-gray-800 z-40 border-b border-gray-700"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFD700' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}
-      >
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <div className="flex items-center">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg flex items-center justify-center">
-                  <span className="text-black font-black text-lg">A</span>
+      {/* Second Tier Navbar - Charcoal Grey with Dynamic Pattern */}
+      <NavbarEntranceAnimation delay={0.1}>
+        <ContextAwareNav>
+          <motion.div
+            variants={{
+              visible: { y: 0, opacity: 1 },
+              hidden: { y: -100, opacity: 0 },
+            }}
+            animate={isHidden ? "hidden" : "visible"}
+            initial={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.3, ease: "easeInOut", delay: 0.1 }}
+            className="fixed top-12 w-full bg-gray-800 z-40 border-b border-gray-700"
+          >
+            <div className="container mx-auto px-4 sm:px-6">
+              <div className="flex items-center justify-between h-16">
+                {/* Logo with Enhanced Animation */}
+                <div className="flex items-center">
+                  <div className="flex items-center gap-3">
+                    <AnimatedLogo size="md" onHover={true} />
+                    <div>
+                      <motion.h1
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3, duration: 0.6 }}
+                        className="text-2xl font-bold text-white relative"
+                        style={{ fontFamily: "Cinzel Decorative, serif" }}
+                      >
+                        Arsh Events
+                        <motion.div
+                          animate={{
+                            scaleX: [0, 1, 0],
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            repeatDelay: 5,
+                            ease: "easeInOut",
+                          }}
+                          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-cinematic-gold to-cinematic-rose origin-left"
+                        />
+                      </motion.h1>
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.5, duration: 0.6 }}
+                        className="text-xs text-cinematic-gold font-signature"
+                      >
+                        Legendary Celebrations
+                      </motion.p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h1
-                    className="text-2xl font-bold text-white"
-                    style={{ fontFamily: "Cinzel Decorative, serif" }}
-                  >
-                    Arsh Events
-                  </h1>
-                </div>
+
+                {/* Desktop Navigation with Enhanced Effects */}
+                <nav className="hidden md:flex items-center space-x-1">
+                  {navItems.map((item, index) => (
+                    <NavItemEntrance key={item.label} index={index}>
+                      {item.hasDropdown ? (
+                        <EnhancedDropdown
+                          trigger={
+                            <motion.div
+                              whileHover={{ y: -2 }}
+                              className="group relative text-white hover:text-cinematic-gold transition-all duration-300 font-medium flex items-center gap-1 px-4 py-2 rounded-lg"
+                            >
+                              <span>{item.label}</span>
+                              <ChevronDown size={14} />
+                              <div className="absolute inset-0 bg-cinematic-gold/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            </motion.div>
+                          }
+                          items={
+                            item.label === "Themes & Décor"
+                              ? themeItems
+                              : item.label === "Events We Plan"
+                                ? eventPlanItems
+                                : venueItems
+                          }
+                          onSelect={(selected) =>
+                            console.log("Selected:", selected)
+                          }
+                        />
+                      ) : (
+                        <motion.a
+                          href={item.href}
+                          whileHover={{ y: -2 }}
+                          className="group relative text-white hover:text-cinematic-gold transition-all duration-300 font-medium flex items-center gap-1 px-4 py-2 rounded-lg"
+                        >
+                          <span>{item.label}</span>
+                          <div className="absolute inset-0 bg-cinematic-gold/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </motion.a>
+                      )}
+
+                      {/* Decorative divider between nav items */}
+                      {index < navItems.length - 1 && <NavDivider />}
+                    </NavItemEntrance>
+                  ))}
+                </nav>
               </div>
             </div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="group relative text-white hover:text-yellow-400 transition-all duration-300 font-medium flex items-center gap-1"
-                  style={{ fontFamily: "Poppins, sans-serif" }}
-                >
-                  <span>{item.label}</span>
-                  {item.hasDropdown && <ChevronDown size={14} />}
-
-                  {/* Hover Effect */}
-                  <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-yellow-400 to-yellow-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
-
-                  {/* Glow Effect */}
-                  <div className="absolute inset-0 bg-yellow-400/10 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 -mx-2 -my-1" />
-                </a>
-              ))}
-            </nav>
-          </div>
-        </div>
-      </motion.div>
+            {/* Decorative divider at bottom */}
+            <div className="container mx-auto px-4 sm:px-6">
+              <DecorativeDivider type="line" size="sm" />
+            </div>
+          </motion.div>
+        </ContextAwareNav>
+      </NavbarEntranceAnimation>
 
       {/* Third Tier - Event Booking Bar */}
       <motion.div
