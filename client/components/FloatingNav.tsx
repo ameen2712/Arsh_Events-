@@ -212,7 +212,7 @@ export default function FloatingNav({
           pointerEvents: isMobileMenuOpen ? "auto" : "none",
         }}
         transition={{ duration: 0.3 }}
-        className="lg:hidden fixed top-28 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-sm px-6"
+        className="md:hidden fixed top-36 left-1/2 transform -translate-x-1/2 z-30 w-full max-w-sm px-6"
       >
         <div className="glass rounded-2xl p-6 space-y-4 shadow-cinematic">
           {navItems.map((item, index) => (
