@@ -46,7 +46,7 @@ export default function FloatingNav({
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="fixed top-4 left-1/2 -translate-x-1/2 z-50"
+        className="fixed top-4 w-full z-50 flex justify-center"
       >
         <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-8 py-4 shadow-lg">
           <div className="flex items-center gap-4">
