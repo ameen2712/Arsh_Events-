@@ -97,23 +97,13 @@ export default function Index() {
               <ThemesCarousel />
             </section>
 
-            {/* Testimonials placeholder for future implementation */}
+            {/* Client Stories Section */}
             <section
               id="testimonials"
-              className="py-32 text-center"
+              className="relative"
               data-context="corporate"
             >
-              <div className="container mx-auto px-6">
-                <div className="glass rounded-3xl p-16">
-                  <h2 className="text-4xl font-heading font-bold text-cinematic-purple mb-6">
-                    Client Stories Coming Soon
-                  </h2>
-                  <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                    We're crafting beautiful testimonials to showcase the
-                    magical moments we've created for our amazing clients
-                  </p>
-                </div>
-              </div>
+              <ClientStories />
             </section>
           </main>
 
