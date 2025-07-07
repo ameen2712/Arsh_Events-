@@ -77,6 +77,12 @@ const cities: City[] = [
     ],
     priceRange: "₹3L - ₹10L",
     featured: ["Krishna Riverfront", "Luxury Resorts", "Rooftop Venues"],
+    eventTypes: ["Wedding", "Corporate", "Birthday", "Engagement"],
+    gallery: [
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&h=300&fit=crop",
+    ],
   },
   {
     name: "Hyderabad",
@@ -92,6 +98,12 @@ const cities: City[] = [
     specialties: ["Royal Weddings", "Corporate Events", "Luxury Celebrations"],
     priceRange: "₹5L - ₹25L",
     featured: ["Palace Hotels", "Tech City Venues", "Historic Forts"],
+    eventTypes: ["Wedding", "Corporate", "Engagement", "Birthday"],
+    gallery: [
+      "https://images.unsplash.com/photo-1566219497843-c7917bb28295?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=300&fit=crop",
+    ],
   },
 ];
 
