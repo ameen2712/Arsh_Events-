@@ -157,7 +157,7 @@ export default function FloatingNav({
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="md:hidden fixed top-36 left-1/2 transform -translate-x-1/2 z-30 w-full max-w-sm px-6"
+          className="md:hidden fixed top-36 left-1/2 -translate-x-1/2 z-30 w-full max-w-sm px-6"
         >
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-lg">
             {/* Mobile Navigation Links */}
