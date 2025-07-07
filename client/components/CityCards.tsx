@@ -1,5 +1,21 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { MapPin, Users, Calendar, Star, ArrowRight } from "lucide-react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
+import {
+  MapPin,
+  Users,
+  Calendar,
+  Star,
+  ArrowRight,
+  X,
+  Phone,
+  MessageCircle,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { useRef, useState } from "react";
 
 interface City {
