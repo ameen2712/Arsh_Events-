@@ -207,8 +207,8 @@ export default function Footer() {
           className="border-t border-white/20 pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
         >
           <p className="text-gray-400 font-body text-center md:text-left">
-            © 2024 Elysian Events. All rights reserved. Crafted with ❤️ for
-            your special moments.
+            © 2024 Arsh Events. All rights reserved. Crafted with ❤️ for your
+            special moments.
           </p>
 
           <div className="flex items-center gap-6">
