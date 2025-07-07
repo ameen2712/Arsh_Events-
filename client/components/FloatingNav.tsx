@@ -162,17 +162,17 @@ export default function FloatingNav({
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="md:hidden fixed top-36 left-1/2 -translate-x-1/2 z-30 w-full max-w-sm px-6"
+          className="md:hidden fixed top-36 w-full z-30 flex justify-center px-4"
         >
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-lg">
+          <div className="w-full max-w-sm bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-lg">
             {/* Mobile Navigation Links */}
-            <div className="space-y-4">
+            <div className="space-y-2">
               {navItems.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block py-3 px-4 text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-white/10 rounded-lg transition-all duration-300"
+                  className="block py-3 px-4 text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-white/10 rounded-lg transition-all duration-300 text-center font-medium"
                 >
                   {item.label}
                 </a>
@@ -186,7 +186,7 @@ export default function FloatingNav({
                   onOpenContact();
                   setIsMobileMenuOpen(false);
                 }}
-                className="w-full bg-white/10 hover:bg-white/20 py-3 rounded-lg text-gray-700 dark:text-gray-300 transition-all duration-300"
+                className="w-full bg-white/10 hover:bg-white/20 py-3 rounded-lg text-gray-700 dark:text-gray-300 transition-all duration-300 font-medium"
               >
                 Contact Us
               </button>
