@@ -7,6 +7,11 @@ import ThemesCarousel from "../components/ThemesCarousel";
 import ContactModal from "../components/ContactModal";
 import BookingFormModal from "../components/BookingFormModal";
 import Footer from "../components/Footer";
+import PageLoadAnimation from "../components/PageLoadAnimation";
+import ScrollProgressGlow from "../components/ScrollProgressGlow";
+import FloatingActionButton from "../components/FloatingActionButton";
+import DynamicBackground from "../components/DynamicBackground";
+import { BackgroundSparkles } from "../components/DecorativeDividers";
 
 export default function Index() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
