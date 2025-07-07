@@ -99,7 +99,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
         >
           <div className="h-px bg-gradient-to-r from-transparent via-cinematic-gold to-transparent w-20" />
           <span className="text-cinematic-gold/80 font-signature tracking-wider">
-            Legendary Celebrations
+            Arsh Events - Legendary Celebrations
           </span>
           <div className="h-px bg-gradient-to-r from-transparent via-cinematic-gold to-transparent w-20" />
         </motion.div>
