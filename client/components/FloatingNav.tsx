@@ -123,23 +123,15 @@ export default function FloatingNav({
 
                 {/* Right side - Actions */}
                 <div className="flex items-center gap-4 ml-auto">
-                  {/* Search Icon with Magnetic Effect */}
+                  {/* Search Icon */}
                   <motion.button
-                    ref={searchButtonMagnetic.ref}
-                    style={{
-                      x: searchButtonMagnetic.x,
-                      y: searchButtonMagnetic.y,
-                    }}
                     onClick={() => setIsSearchOpen(true)}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="text-gray-300 hover:text-cinematic-gold transition-colors p-1 relative group"
+                    className="text-gray-300 hover:text-cinematic-gold transition-colors p-1"
                   >
                     <Search size={16} />
-                    <div className="absolute inset-0 bg-cinematic-gold/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 -m-1" />
                   </motion.button>
-
-                  <NavDivider />
 
                   {/* Dark Mode Toggle */}
                   <motion.button
@@ -150,35 +142,6 @@ export default function FloatingNav({
                   >
                     {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
                   </motion.button>
-
-                  <NavDivider />
-
-                  {/* Login / Sign-up */}
-                  <div className="hidden sm:flex items-center gap-3">
-                    <motion.button
-                      whileHover={{ scale: 1.05, y: -1 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="text-gray-300 hover:text-white transition-colors flex items-center gap-1"
-                    >
-                      <User size={16} />
-                      <span>LOGIN</span>
-                    </motion.button>
-                    <motion.button
-                      whileHover={{ scale: 1.05, y: -1 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="text-gray-300 hover:text-white transition-colors flex items-center gap-1"
-                    >
-                      <UserPlus size={16} />
-                      <span>SIGN-UP</span>
-                    </motion.button>
-                  </div>
-
-                  <NavDivider className="hidden md:block" />
-
-                  {/* Language Switcher */}
-                  <div className="hidden md:block">
-                    <LanguageSwitcher />
-                  </div>
 
                   {/* Mobile Menu Toggle */}
                   <motion.button
