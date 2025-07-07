@@ -17,6 +17,7 @@ import {
   Youtube,
 } from "lucide-react";
 import AnimatedLogo from "./AnimatedLogo";
+import { Link } from "react-router-dom";
 
 interface EnhancedMobileMenuProps {
   isOpen: boolean;
@@ -26,23 +27,55 @@ interface EnhancedMobileMenuProps {
 }
 
 const navItems = [
-  { label: "Home", href: "#home", icon: Home, color: "text-blue-400" },
+  {
+    label: "Home",
+    href: "/",
+    icon: Home,
+    color: "text-blue-400",
+    isRoute: true,
+  },
   {
     label: "Events We Plan",
-    href: "#services",
+    href: "/services",
     icon: Calendar,
     color: "text-purple-400",
+    isRoute: true,
   },
   {
     label: "Themes & Décor",
-    href: "#themes",
+    href: "/themes",
     icon: Palette,
     color: "text-pink-400",
+    isRoute: true,
   },
-  { label: "Venues", href: "#venues", icon: MapPin, color: "text-green-400" },
-  { label: "Offers", href: "#offers", icon: Gift, color: "text-yellow-400" },
-  { label: "Gallery", href: "#gallery", icon: Camera, color: "text-red-400" },
-  { label: "Contact", href: "#contact", icon: Phone, color: "text-cyan-400" },
+  {
+    label: "Venues",
+    href: "/venues",
+    icon: MapPin,
+    color: "text-green-400",
+    isRoute: true,
+  },
+  {
+    label: "Offers",
+    href: "/offers",
+    icon: Gift,
+    color: "text-yellow-400",
+    isRoute: true,
+  },
+  {
+    label: "Gallery",
+    href: "#gallery",
+    icon: Camera,
+    color: "text-red-400",
+    isRoute: false,
+  },
+  {
+    label: "Contact",
+    href: "#contact",
+    icon: Phone,
+    color: "text-cyan-400",
+    isRoute: false,
+  },
 ];
 
 const socialLinks = [
@@ -183,40 +216,63 @@ export default function EnhancedMobileMenu({
                   Navigation
                 </h3>
                 <nav className="space-y-2">
-                  {navItems.map((item, index) => (
-                    <motion.button
-                      key={item.label}
-                      onClick={() => handleNavClick(item.href, item.label)}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 + index * 0.05 }}
-                      whileHover={{ x: 5 }}
-                      className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all duration-300 group ${
-                        activeSection ===
-                        item.label.toLowerCase().replace(/\s+/g, "")
-                          ? "bg-cinematic-gold/10 text-cinematic-gold"
-                          : "text-white hover:bg-gray-800/50"
-                      }`}
-                    >
-                      <div
-                        className={`p-2 rounded-lg bg-gray-800 group-hover:bg-gray-700 transition-colors ${item.color}`}
-                      >
-                        <item.icon size={18} />
-                      </div>
-                      <span className="font-medium">{item.label}</span>
+                  {navItems.map((item, index) =>
+                    item.isRoute ? (
                       <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{
-                          scale:
-                            activeSection ===
-                            item.label.toLowerCase().replace(/\s+/g, "")
-                              ? 1
-                              : 0,
-                        }}
-                        className="ml-auto w-2 h-2 bg-cinematic-gold rounded-full"
-                      />
-                    </motion.button>
-                  ))}
+                        key={item.label}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 + index * 0.05 }}
+                        whileHover={{ x: 5 }}
+                      >
+                        <Link
+                          to={item.href}
+                          onClick={() => onClose()}
+                          className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all duration-300 group text-white hover:bg-gray-800/50`}
+                        >
+                          <div
+                            className={`p-2 rounded-lg bg-gray-800 group-hover:bg-gray-700 transition-colors ${item.color}`}
+                          >
+                            <item.icon size={18} />
+                          </div>
+                          <span className="font-medium">{item.label}</span>
+                        </Link>
+                      </motion.div>
+                    ) : (
+                      <motion.button
+                        key={item.label}
+                        onClick={() => handleNavClick(item.href, item.label)}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 + index * 0.05 }}
+                        whileHover={{ x: 5 }}
+                        className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all duration-300 group ${
+                          activeSection ===
+                          item.label.toLowerCase().replace(/\s+/g, "")
+                            ? "bg-cinematic-gold/10 text-cinematic-gold"
+                            : "text-white hover:bg-gray-800/50"
+                        }`}
+                      >
+                        <div
+                          className={`p-2 rounded-lg bg-gray-800 group-hover:bg-gray-700 transition-colors ${item.color}`}
+                        >
+                          <item.icon size={18} />
+                        </div>
+                        <span className="font-medium">{item.label}</span>
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{
+                            scale:
+                              activeSection ===
+                              item.label.toLowerCase().replace(/\s+/g, "")
+                                ? 1
+                                : 0,
+                          }}
+                          className="ml-auto w-2 h-2 bg-cinematic-gold rounded-full"
+                        />
+                      </motion.button>
+                    ),
+                  )}
                 </nav>
               </motion.div>
 
