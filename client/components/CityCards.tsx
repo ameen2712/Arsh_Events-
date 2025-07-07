@@ -109,6 +109,8 @@ const cities: City[] = [
 
 export default function CityCards() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [selectedCity, setSelectedCity] = useState<City | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -117,6 +119,35 @@ export default function CityCards() {
 
   const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+
+  const handleCityClick = (city: City) => {
+    setSelectedCity(city);
+    setCurrentImageIndex(0);
+  };
+
+  const handleCall = () => {
+    window.open("tel:+918919836337", "_self");
+  };
+
+  const handleWhatsApp = () => {
+    window.open("https://wa.me/918919836337", "_blank");
+  };
+
+  const nextImage = () => {
+    if (selectedCity) {
+      setCurrentImageIndex((prev) =>
+        prev === selectedCity.gallery.length - 1 ? 0 : prev + 1,
+      );
+    }
+  };
+
+  const prevImage = () => {
+    if (selectedCity) {
+      setCurrentImageIndex((prev) =>
+        prev === 0 ? selectedCity.gallery.length - 1 : prev - 1,
+      );
+    }
+  };
 
   return (
     <section ref={sectionRef} className="py-32 relative overflow-hidden">
