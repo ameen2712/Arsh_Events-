@@ -78,7 +78,7 @@ export default function FloatingNav({
         initial={{ y: -50, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="fixed top-20 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-4xl px-6"
+        className="fixed top-20 left-1/2 -translate-x-1/2 z-40 w-full max-w-4xl px-6"
       >
         <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl px-8 py-4 shadow-lg">
           {/* Desktop Layout */}
