@@ -133,161 +133,178 @@ export default function EventStories() {
       </div>
 
       {/* Horizontal Scroll Container */}
-      <motion.div style={{ x }} className="flex gap-8">
-        {eventTypes.map((event, index) => (
-          <motion.div
-            key={event.title}
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: index * 0.2 }}
-            viewport={{ once: true }}
-            className="flex-shrink-0 w-[90vw] md:w-[70vw] lg:w-[60vw] relative"
-          >
-            <div
-              className={`relative min-h-[80vh] rounded-3xl overflow-hidden bg-gradient-to-br ${event.bgGradient} shadow-cinematic`}
+      <div className="relative">
+        <div
+          className="flex gap-8 overflow-x-auto scroll-smooth pb-4"
+          style={{
+            scrollSnapType: "x mandatory",
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
+          {eventTypes.map((event, index) => (
+            <motion.div
+              key={event.title}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              viewport={{ once: true }}
+              className="flex-shrink-0 w-[90vw] md:w-[70vw] lg:w-[60vw] relative"
+              style={{ scrollSnapAlign: "start" }}
             >
-              {/* Background Image with Parallax */}
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.6 }}
-                className="absolute inset-0"
+              <div
+                className={`relative min-h-[80vh] rounded-3xl overflow-hidden bg-gradient-to-br ${event.bgGradient} shadow-cinematic`}
               >
-                <div
-                  className="w-full h-full bg-cover bg-center opacity-40"
-                  style={{ backgroundImage: `url(${event.image})` }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-white/40" />
-              </motion.div>
-
-              {/* Content */}
-              <div className="relative h-full flex flex-col justify-between p-8 md:p-12">
-                {/* Header */}
-                <div className="flex items-start justify-between">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="glass p-4 rounded-2xl"
-                  >
-                    {event.icon}
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className={`glass px-6 py-2 rounded-full ${event.textColor} font-semibold`}
-                  >
-                    {event.priceRange}
-                  </motion.div>
-                </div>
-
-                {/* Main Content */}
-                <div className="flex-1 flex flex-col justify-center max-w-2xl">
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className="mb-6"
-                  >
-                    <h3
-                      className={`text-5xl md:text-6xl font-heading font-bold ${event.textColor} mb-4`}
-                    >
-                      {event.title}
-                    </h3>
-                    <p className="text-2xl font-signature text-gray-600 mb-6">
-                      {event.subtitle}
-                    </p>
-                    <p className="text-lg text-gray-700 leading-relaxed">
-                      {event.description}
-                    </p>
-                  </motion.div>
-
-                  {/* Features Grid */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
-                    className="grid grid-cols-2 gap-4 mb-8"
-                  >
-                    {event.features.map((feature, idx) => (
-                      <motion.div
-                        key={idx}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.7 + idx * 0.1 }}
-                        className="flex items-center gap-3 glass px-4 py-3 rounded-xl"
-                      >
-                        <div
-                          className={`w-2 h-2 bg-${event.color} rounded-full`}
-                        />
-                        <span className="text-gray-700 font-medium">
-                          {feature}
-                        </span>
-                      </motion.div>
-                    ))}
-                  </motion.div>
-
-                  {/* CTA Button */}
-                  <motion.button
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8 }}
-                    whileHover={{
-                      scale: 1.05,
-                      y: -5,
-                      boxShadow: `0 20px 40px hsl(var(--${event.color}) / 0.3)`,
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`bg-gradient-to-r from-${event.color} to-cinematic-gold text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg`}
-                  >
-                    Explore {event.title} Packages
-                  </motion.button>
-                </div>
-
-                {/* Stats */}
+                {/* Background Image with Parallax */}
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.9 }}
-                  className="flex items-center justify-center gap-8 pt-8 border-t border-gray-300/50"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.6 }}
+                  className="absolute inset-0"
                 >
-                  <div className="text-center">
-                    <div className="flex items-center justify-center gap-2 mb-1">
-                      <Calendar size={16} className={event.textColor} />
-                      <span className={`text-2xl font-bold ${event.textColor}`}>
-                        {index === 0
-                          ? "200+"
-                          : index === 1
-                            ? "500+"
-                            : index === 2
-                              ? "150+"
-                              : "50+"}
-                      </span>
-                    </div>
-                    <span className="text-gray-600 text-sm">Events</span>
-                  </div>
-                  <div className="text-center">
-                    <div className="flex items-center justify-center gap-2 mb-1">
-                      <Users size={16} className={event.textColor} />
-                      <span className={`text-2xl font-bold ${event.textColor}`}>
-                        {index === 0
-                          ? "2K+"
-                          : index === 1
-                            ? "5K+"
-                            : index === 2
-                              ? "800+"
-                              : "200+"}
-                      </span>
-                    </div>
-                    <span className="text-gray-600 text-sm">Happy Clients</span>
-                  </div>
+                  <div
+                    className="w-full h-full bg-cover bg-center opacity-40"
+                    style={{ backgroundImage: `url(${event.image})` }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-white/40" />
                 </motion.div>
+
+                {/* Content */}
+                <div className="relative h-full flex flex-col justify-between p-8 md:p-12">
+                  {/* Header */}
+                  <div className="flex items-start justify-between">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="glass p-4 rounded-2xl"
+                    >
+                      {event.icon}
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className={`glass px-6 py-2 rounded-full ${event.textColor} font-semibold`}
+                    >
+                      {event.priceRange}
+                    </motion.div>
+                  </div>
+
+                  {/* Main Content */}
+                  <div className="flex-1 flex flex-col justify-center max-w-2xl">
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="mb-6"
+                    >
+                      <h3
+                        className={`text-5xl md:text-6xl font-heading font-bold ${event.textColor} mb-4`}
+                      >
+                        {event.title}
+                      </h3>
+                      <p className="text-2xl font-signature text-gray-600 mb-6">
+                        {event.subtitle}
+                      </p>
+                      <p className="text-lg text-gray-700 leading-relaxed">
+                        {event.description}
+                      </p>
+                    </motion.div>
+
+                    {/* Features Grid */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 }}
+                      className="grid grid-cols-2 gap-4 mb-8"
+                    >
+                      {event.features.map((feature, idx) => (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.7 + idx * 0.1 }}
+                          className="flex items-center gap-3 glass px-4 py-3 rounded-xl"
+                        >
+                          <div
+                            className={`w-2 h-2 bg-${event.color} rounded-full`}
+                          />
+                          <span className="text-gray-700 font-medium">
+                            {feature}
+                          </span>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+
+                    {/* CTA Button */}
+                    <motion.button
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.8 }}
+                      whileHover={{
+                        scale: 1.05,
+                        y: -5,
+                        boxShadow: `0 20px 40px hsl(var(--${event.color}) / 0.3)`,
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`bg-gradient-to-r from-${event.color} to-cinematic-gold text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg`}
+                    >
+                      Explore {event.title} Packages
+                    </motion.button>
+                  </div>
+
+                  {/* Stats */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.9 }}
+                    className="flex items-center justify-center gap-8 pt-8 border-t border-gray-300/50"
+                  >
+                    <div className="text-center">
+                      <div className="flex items-center justify-center gap-2 mb-1">
+                        <Calendar size={16} className={event.textColor} />
+                        <span
+                          className={`text-2xl font-bold ${event.textColor}`}
+                        >
+                          {index === 0
+                            ? "200+"
+                            : index === 1
+                              ? "500+"
+                              : index === 2
+                                ? "150+"
+                                : "50+"}
+                        </span>
+                      </div>
+                      <span className="text-gray-600 text-sm">Events</span>
+                    </div>
+                    <div className="text-center">
+                      <div className="flex items-center justify-center gap-2 mb-1">
+                        <Users size={16} className={event.textColor} />
+                        <span
+                          className={`text-2xl font-bold ${event.textColor}`}
+                        >
+                          {index === 0
+                            ? "2K+"
+                            : index === 1
+                              ? "5K+"
+                              : index === 2
+                                ? "800+"
+                                : "200+"}
+                        </span>
+                      </div>
+                      <span className="text-gray-600 text-sm">
+                        Happy Clients
+                      </span>
+                    </div>
+                  </motion.div>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
 
       {/* Scroll Hint */}
       <motion.div
