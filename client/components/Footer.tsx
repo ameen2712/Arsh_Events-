@@ -206,10 +206,22 @@ export default function Footer() {
           viewport={{ once: true }}
           className="border-t border-white/20 pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
         >
-          <p className="text-gray-400 font-body text-center md:text-left">
-            © 2024 Arsh Events. All rights reserved. Crafted with ❤️ for your
-            special moments.
-          </p>
+          <div className="text-center md:text-left">
+            <p className="text-gray-400 font-body">
+              © 2024 Arsh Events. All rights reserved. Crafted with ❤️ for your
+              special moments.
+            </p>
+            <motion.a
+              href="https://www.linkedin.com/in/ameen-ahammad-mohammad-252418192/"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              className="inline-block mt-2 text-cinematic-gold hover:text-yellow-300 transition-colors duration-300 text-sm relative group"
+            >
+              Made by Ameen 💼
+              <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-cinematic-gold to-yellow-300 scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+            </motion.a>
+          </div>
 
           <div className="flex items-center gap-6">
             <a
