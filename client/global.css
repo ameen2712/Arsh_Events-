@@ -193,9 +193,9 @@
   .text-shimmer {
     background: linear-gradient(
       90deg,
-      hsl(var(--cinematic-purple)),
-      hsl(var(--cinematic-gold)),
-      hsl(var(--cinematic-purple))
+      hsl(210 100% 56%),
+      hsl(200 100% 70%),
+      hsl(210 100% 56%)
     );
     background-size: 200% 100%;
     background-clip: text;
