@@ -277,9 +277,9 @@ export default function Footer() {
       {/* Back to Top Button */}
       <motion.button
         onClick={scrollToTop}
-        whileHover={{ scale: 1.1, y: -2 }}
+        whileHover={{ scale: 1.1, y: -5 }}
         whileTap={{ scale: 0.9 }}
-        className="fixed bottom-6 right-6 bg-gradient-to-r from-luxury-purple to-luxury-gold text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-40"
+        className="fixed bottom-6 right-6 bg-primary text-primary-foreground w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-40 hover:shadow-primary/20"
         aria-label="Back to top"
       >
         <ArrowUp size={20} />
