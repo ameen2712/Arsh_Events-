@@ -215,8 +215,8 @@ export default function FloatingNav({
         onOpenBooking={onOpenBooking}
       />
 
-      {/* Spacer to prevent content overlap - 112px total (48px + 64px) */}
-      <div className="h-28" />
+      {/* Spacer to prevent content overlap - 128px total (64px + 64px) */}
+      <div className="h-32" />
     </>
   );
 }
