@@ -1,530 +1,782 @@
-import { motion } from "framer-motion";
-import { ArrowLeft, Palette, Crown, Heart, Star, Eye } from "lucide-react";
-import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import {
+  Search,
+  Filter,
+  Heart,
+  Star,
+  Eye,
+  Download,
+  Share2,
+  ChevronLeft,
+  ChevronRight,
+  X,
+  Palette,
+  Crown,
+  Leaf,
+  Sun,
+  Waves,
+  Sparkles,
+  Calendar,
+  MapPin,
+  Users,
+  Phone,
+  MessageCircle,
+} from "lucide-react";
 import FloatingNav from "../components/FloatingNav";
 import ContactModal from "../components/ContactModal";
 import BookingFormModal from "../components/BookingFormModal";
 
-const themeCategories = [
+interface Theme {
+  id: number;
+  title: string;
+  category: string;
+  description: string;
+  mainImage: string;
+  gallery: string[];
+  priceRange: string;
+  popularity: number;
+  colors: string[];
+  features: string[];
+  occasions: string[];
+  tags: string[];
+  featured: boolean;
+}
+
+const categories = [
   {
-    id: 1,
-    name: "Wedding Themes",
-    description: "Romantic and elegant themes for your special day",
-    count: 12,
-    color: "from-rose-500 to-pink-600",
+    id: "all",
+    label: "All Themes",
+    icon: Palette,
+    color: "from-purple-500 to-indigo-600",
   },
   {
-    id: 2,
-    name: "Birthday Themes",
-    description: "Fun and vibrant themes for all ages",
-    count: 18,
-    color: "from-purple-500 to-violet-600",
+    id: "luxury",
+    label: "Luxury Royal",
+    icon: Crown,
+    color: "from-yellow-500 to-orange-600",
   },
   {
-    id: 3,
-    name: "Corporate Themes",
-    description: "Professional and sophisticated themes",
-    count: 8,
-    color: "from-blue-500 to-indigo-600",
+    id: "nature",
+    label: "Garden & Nature",
+    icon: Leaf,
+    color: "from-green-500 to-emerald-600",
   },
   {
-    id: 4,
-    name: "Luxury Premium",
-    description: "Exclusive high-end themes",
-    count: 6,
-    color: "from-yellow-500 to-amber-600",
+    id: "modern",
+    label: "Contemporary",
+    icon: Sun,
+    color: "from-blue-500 to-cyan-600",
+  },
+  {
+    id: "coastal",
+    label: "Coastal & Beach",
+    icon: Waves,
+    color: "from-cyan-500 to-blue-600",
+  },
+  {
+    id: "vintage",
+    label: "Vintage & Rustic",
+    icon: Sparkles,
+    color: "from-amber-500 to-orange-600",
   },
 ];
 
-const featuredThemes = [
+const themes: Theme[] = [
   {
     id: 1,
-    title: "Royal Palace",
-    category: "Wedding",
+    title: "Royal Palace Wedding",
+    category: "luxury",
     description:
-      "Majestic golden décor with royal blue accents, featuring ornate chandeliers and luxurious fabrics.",
-    image:
-      "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop",
+      "Experience the grandeur of Indian royalty with opulent gold décor, majestic mandaps, and luxurious fabrics.",
+    mainImage:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=600&fit=crop",
     gallery: [
-      "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?w=600&h=400&fit=crop",
     ],
-    price: "₹2,50,000+",
-    rating: 4.9,
+    priceRange: "₹5L - ₹25L",
+    popularity: 95,
+    colors: ["#FFD700", "#8B0000", "#FF6B35", "#8B4513"],
     features: [
-      "Golden Mandap",
-      "Crystal Chandeliers",
-      "Silk Drapes",
-      "Royal Seating",
+      "Golden Mandap with Crystal Chandeliers",
+      "Royal Throne Setup",
+      "Luxury Fabric Draping",
+      "Traditional Music & Dance",
+      "Royal Procession Setup",
+      "Premium Floral Arrangements",
     ],
-    colors: ["#FFD700", "#4169E1", "#8B0000", "#FFFFFF"],
+    occasions: ["Weddings", "Engagements", "Anniversaries"],
+    tags: ["royal", "gold", "luxury", "traditional", "mandap"],
+    featured: true,
   },
   {
     id: 2,
-    title: "Enchanted Garden",
-    category: "Wedding",
+    title: "Garden Paradise",
+    category: "nature",
     description:
-      "Natural beauty with lush greenery, fairy lights, and floral arrangements in a magical garden setting.",
-    image:
-      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&h=400&fit=crop",
+      "Celebrate in nature's embrace with lush greenery, floral arches, and organic décor elements.",
+    mainImage:
+      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&h=600&fit=crop",
     gallery: [
-      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=600&h=400&fit=crop",
     ],
-    price: "₹1,80,000+",
-    rating: 4.8,
+    priceRange: "₹2L - ₹12L",
+    popularity: 88,
+    colors: ["#228B22", "#FFB6C1", "#F0E68C", "#98FB98"],
     features: [
-      "Floral Archway",
-      "Fairy Lights",
-      "Garden Seating",
-      "Natural Décor",
+      "Natural Floral Arches",
+      "Fairy Light Canopies",
+      "Rustic Wood Elements",
+      "Organic Centerpieces",
+      "Garden Pathway Lighting",
+      "Live Plant Installations",
     ],
-    colors: ["#228B22", "#FFB6C1", "#FFFFFF", "#DDA0DD"],
+    occasions: ["Weddings", "Birthdays", "Corporate"],
+    tags: ["garden", "natural", "floral", "outdoor", "organic"],
+    featured: true,
   },
   {
     id: 3,
-    title: "Princess Castle",
-    category: "Birthday",
+    title: "Modern Minimalist",
+    category: "modern",
     description:
-      "Magical princess theme with pink and gold décor, perfect for little princesses' dream celebrations.",
-    image:
-      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&h=400&fit=crop",
+      "Clean lines, contemporary design, and sophisticated color palettes for the modern couple.",
+    mainImage:
+      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&h=600&fit=crop",
     gallery: [
-      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=400&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1478146896981-b80fe463b330?w=600&h=400&fit=crop",
     ],
-    price: "₹45,000+",
-    rating: 5.0,
+    priceRange: "₹3L - ₹15L",
+    popularity: 82,
+    colors: ["#2F2F2F", "#FFFFFF", "#C0C0C0", "#4A90E2"],
     features: [
-      "Castle Backdrop",
-      "Princess Throne",
-      "Balloon Arch",
-      "Crown Props",
+      "Geometric Stage Design",
+      "LED Panel Backdrops",
+      "Sleek Furniture Arrangements",
+      "Monochromatic Color Schemes",
+      "Contemporary Lighting",
+      "Architectural Elements",
     ],
-    colors: ["#FFB6C1", "#FFD700", "#DDA0DD", "#FFFFFF"],
+    occasions: ["Corporate", "Birthdays", "Engagements"],
+    tags: ["modern", "minimalist", "contemporary", "geometric", "clean"],
+    featured: false,
   },
   {
     id: 4,
-    title: "Modern Minimalist",
-    category: "Corporate",
+    title: "Coastal Elegance",
+    category: "coastal",
     description:
-      "Clean, sophisticated design with geometric patterns and premium materials for corporate excellence.",
-    image:
-      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&h=400&fit=crop",
+      "Bring the serenity of the ocean with blues, whites, and nautical-inspired décor elements.",
+    mainImage:
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&h=600&fit=crop",
     gallery: [
-      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1504691342899-4d92b50853e1?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&h=400&fit=crop",
     ],
-    price: "₹1,20,000+",
-    rating: 4.7,
+    priceRange: "₹2.5L - ₹10L",
+    popularity: 76,
+    colors: ["#0066CC", "#FFFFFF", "#F0F8FF", "#20B2AA"],
     features: [
-      "Geometric Décor",
-      "LED Lighting",
-      "Premium Seating",
-      "Brand Integration",
+      "Nautical Rope Decorations",
+      "Seashell Centerpieces",
+      "Ocean-inspired Backdrops",
+      "Sandy Color Palettes",
+      "Driftwood Arrangements",
+      "Beach Umbrella Setups",
     ],
-    colors: ["#000000", "#FFFFFF", "#C0C0C0", "#4169E1"],
+    occasions: ["Weddings", "Birthdays", "Corporate"],
+    tags: ["coastal", "beach", "nautical", "ocean", "blue"],
+    featured: false,
   },
   {
     id: 5,
     title: "Vintage Romance",
-    category: "Wedding",
+    category: "vintage",
     description:
-      "Timeless elegance with vintage elements, lace details, and soft romantic lighting.",
-    image:
-      "https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&h=400&fit=crop",
+      "Step back in time with antique furniture, warm lighting, and nostalgic décor elements.",
+    mainImage:
+      "https://images.unsplash.com/photo-1478146896981-b80fe463b330?w=800&h=600&fit=crop",
     gallery: [
-      "https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=400&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1478146896981-b80fe463b330?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=600&h=400&fit=crop",
     ],
-    price: "₹2,00,000+",
-    rating: 4.9,
+    priceRange: "₹1.5L - ₹8L",
+    popularity: 71,
+    colors: ["#8B4513", "#DEB887", "#F5DEB3", "#CD853F"],
     features: [
-      "Vintage Furniture",
-      "Lace Details",
-      "Antique Props",
-      "Soft Lighting",
+      "Antique Furniture Collections",
+      "Vintage Lace & Doilies",
+      "Edison Bulb Lighting",
+      "Old-world Charm Elements",
+      "Rustic Wooden Backdrops",
+      "Vintage Photo Displays",
     ],
-    colors: ["#F5F5DC", "#DDA0DD", "#FFB6C1", "#8FBC8F"],
+    occasions: ["Weddings", "Anniversaries", "Birthdays"],
+    tags: ["vintage", "antique", "rustic", "romantic", "warm"],
+    featured: true,
   },
   {
     id: 6,
-    title: "Superhero Adventure",
-    category: "Birthday",
+    title: "Bollywood Glamour",
+    category: "luxury",
     description:
-      "Action-packed superhero theme with vibrant colors and exciting décor elements.",
-    image:
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&h=400&fit=crop",
+      "Lights, camera, action! A glamorous theme inspired by Bollywood's golden era.",
+    mainImage:
+      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop",
     gallery: [
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=400&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&h=400&fit=crop",
     ],
-    price: "₹35,000+",
-    rating: 4.8,
+    priceRange: "₹4L - ₹20L",
+    popularity: 89,
+    colors: ["#FF1493", "#FFD700", "#9932CC", "#FF4500"],
     features: [
-      "Hero Backdrops",
-      "Action Props",
-      "Costume Station",
-      "Comic Décor",
+      "Bollywood Dance Floor",
+      "Movie Poster Backdrops",
+      "Glamorous Lighting Effects",
+      "Star-studded Decorations",
+      "Red Carpet Entry",
+      "Filmi Music Setup",
     ],
-    colors: ["#FF0000", "#0000FF", "#FFD700", "#000000"],
+    occasions: ["Birthdays", "Weddings", "Corporate"],
+    tags: ["bollywood", "glamour", "filmi", "dance", "entertainment"],
+    featured: true,
   },
 ];
 
 export default function Themes() {
-  const [selectedTheme, setSelectedTheme] = useState<
-    (typeof featuredThemes)[0] | null
-  >(null);
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [likedThemes, setLikedThemes] = useState<Set<number>>(new Set());
+  const [sortBy, setSortBy] = useState<"popularity" | "price" | "name">(
+    "popularity",
+  );
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
-  const filteredThemes =
-    activeCategory === "All"
-      ? featuredThemes
-      : featuredThemes.filter((theme) => theme.category === activeCategory);
+  const filteredThemes = themes
+    .filter((theme) => {
+      const matchesCategory =
+        selectedCategory === "all" || theme.category === selectedCategory;
+      const matchesSearch =
+        theme.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        theme.tags.some((tag) =>
+          tag.toLowerCase().includes(searchQuery.toLowerCase()),
+        );
+      return matchesCategory && matchesSearch;
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "popularity":
+          return b.popularity - a.popularity;
+        case "price":
+          return (
+            parseInt(a.priceRange.replace(/[^\d]/g, "")) -
+            parseInt(b.priceRange.replace(/[^\d]/g, ""))
+          );
+        case "name":
+          return a.title.localeCompare(b.title);
+        default:
+          return 0;
+      }
+    });
+
+  const toggleLike = (themeId: number) => {
+    setLikedThemes((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(themeId)) {
+        newSet.delete(themeId);
+      } else {
+        newSet.add(themeId);
+      }
+      return newSet;
+    });
+  };
+
+  const openLightbox = (theme: Theme, imageIndex = 0) => {
+    setSelectedTheme(theme);
+    setCurrentImageIndex(imageIndex);
+  };
+
+  const navigateLightbox = (direction: "prev" | "next") => {
+    if (!selectedTheme) return;
+
+    const totalImages = selectedTheme.gallery.length;
+    const newIndex =
+      direction === "next"
+        ? (currentImageIndex + 1) % totalImages
+        : (currentImageIndex - 1 + totalImages) % totalImages;
+
+    setCurrentImageIndex(newIndex);
+  };
+
+  const openWhatsApp = (theme?: Theme) => {
+    const message = theme
+      ? `Hi! I'm interested in the "${theme.title}" theme for my event. Could you please provide more details and pricing?`
+      : "Hi! I'd like to know more about your theme and décor services.";
+
+    window.open(
+      `https://wa.me/918919836337?text=${encodeURIComponent(message)}`,
+      "_blank",
+    );
+  };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Floating Navigation */}
+    <>
       <FloatingNav
         onOpenContact={() => setIsContactModalOpen(true)}
         onOpenBooking={() => setIsBookingModalOpen(true)}
       />
 
-      <div className="pt-36">
+      <div className="min-h-screen bg-background">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-background to-muted/20">
-          <div className="container mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center max-w-4xl mx-auto mb-16"
-            >
-              <Link
-                to="/"
-                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-8"
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="pt-36 pb-16 px-4 text-center bg-gradient-to-b from-background via-background/95 to-background/50"
+        >
+          <motion.div
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="max-w-4xl mx-auto"
+          >
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
+              Themes & Décor
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Transform your celebrations with our stunning collection of themes
+              and décor designs, crafted to bring your vision to life.
+            </p>
+          </motion.div>
+        </motion.section>
+
+        {/* Filters Section */}
+        <motion.section
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="px-4 mb-12"
+        >
+          <div className="max-w-7xl mx-auto">
+            {/* Search Bar */}
+            <div className="relative max-w-2xl mx-auto mb-8">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search themes, colors, or occasions..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-4 rounded-2xl border border-border bg-card text-card-foreground focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+              />
+            </div>
+
+            {/* Category Filters */}
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              {categories.map((category) => {
+                const Icon = category.icon;
+                return (
+                  <motion.button
+                    key={category.id}
+                    onClick={() => setSelectedCategory(category.id)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`flex items-center gap-3 px-6 py-3 rounded-2xl font-medium transition-all ${
+                      selectedCategory === category.id
+                        ? "bg-primary text-primary-foreground shadow-lg"
+                        : "bg-card text-card-foreground hover:bg-accent border border-border"
+                    }`}
+                  >
+                    <Icon className="w-5 h-5" />
+                    {category.label}
+                  </motion.button>
+                );
+              })}
+            </div>
+
+            {/* Sort Options */}
+            <div className="flex justify-center gap-4">
+              <select
+                value={sortBy}
+                onChange={(e) =>
+                  setSortBy(e.target.value as "popularity" | "price" | "name")
+                }
+                className="px-4 py-2 rounded-xl border border-border bg-card text-card-foreground focus:ring-2 focus:ring-primary focus:border-transparent"
               >
-                <ArrowLeft size={20} />
-                <span>Back to Home</span>
-              </Link>
-
-              <h1 className="text-5xl md:text-7xl font-heading font-bold text-foreground mb-6">
-                Themes &
-                <span className="block bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                  Décor Collection
-                </span>
-              </h1>
-
-              <p className="text-xl text-muted-foreground leading-relaxed">
-                Discover our curated collection of stunning themes and décor
-                styles. From traditional elegance to modern sophistication, find
-                the perfect aesthetic for your celebration.
-              </p>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Theme Categories */}
-        <section className="py-20">
-          <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-              {themeCategories.map((category, index) => (
-                <motion.div
-                  key={category.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  onClick={() => setActiveCategory(category.name.split(" ")[0])}
-                  className={`cursor-pointer group ${
-                    activeCategory === category.name.split(" ")[0]
-                      ? "scale-105"
-                      : ""
-                  }`}
-                >
-                  <div className="bg-card rounded-2xl p-8 border border-border hover:shadow-lg transition-all duration-300">
-                    <div
-                      className={`w-16 h-16 bg-gradient-to-r ${category.color} rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      <Palette className="text-white" size={28} />
-                    </div>
-                    <h3 className="text-xl font-bold text-foreground mb-3">
-                      {category.name}
-                    </h3>
-                    <p className="text-muted-foreground mb-4">
-                      {category.description}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-primary font-semibold">
-                        {category.count} Themes
-                      </span>
-                      <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                        <Eye className="text-primary" size={14} />
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Filter Buttons */}
-            <div className="flex flex-wrap justify-center gap-4 mb-12">
-              {["All", "Wedding", "Birthday", "Corporate"].map((filter) => (
-                <motion.button
-                  key={filter}
-                  onClick={() => setActiveCategory(filter)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                    activeCategory === filter
-                      ? "bg-primary text-primary-foreground shadow-lg"
-                      : "bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary"
-                  }`}
-                >
-                  {filter}
-                </motion.button>
-              ))}
+                <option value="popularity">Sort by Popularity</option>
+                <option value="price">Sort by Price</option>
+                <option value="name">Sort by Name</option>
+              </select>
             </div>
           </div>
-        </section>
+        </motion.section>
 
-        {/* Featured Themes Grid */}
-        <section className="py-20">
-          <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredThemes.map((theme, index) => (
-                <motion.div
-                  key={theme.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="group cursor-pointer"
-                  onClick={() => setSelectedTheme(theme)}
-                >
-                  <div className="bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-border">
-                    {/* Theme Image */}
-                    <div className="relative h-64 overflow-hidden">
-                      <motion.img
-                        src={theme.image}
+        {/* Themes Grid */}
+        <motion.section
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="px-4 pb-20"
+        >
+          <div className="max-w-7xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <AnimatePresence>
+                {filteredThemes.map((theme, index) => (
+                  <motion.div
+                    key={theme.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="group relative bg-card border border-border rounded-3xl overflow-hidden"
+                  >
+                    {/* Main Image */}
+                    <div className="relative aspect-square overflow-hidden cursor-pointer">
+                      <img
+                        src={theme.mainImage}
                         alt={theme.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        onClick={() => openLightbox(theme)}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
-                      {/* Category Badge */}
-                      <div className="absolute top-4 left-4 bg-primary/90 text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
-                        {theme.category}
+                      {/* Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
+                        {/* Top Actions */}
+                        <div className="absolute top-4 left-4 right-4 flex justify-between">
+                          {theme.featured && (
+                            <span className="bg-primary text-primary-foreground text-xs px-3 py-1 rounded-full font-medium">
+                              Featured
+                            </span>
+                          )}
+                          <div className="flex gap-2 ml-auto">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleLike(theme.id);
+                              }}
+                              className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all backdrop-blur-sm"
+                            >
+                              <Heart
+                                className={`w-5 h-5 ${likedThemes.has(theme.id) ? "fill-red-500 text-red-500" : ""}`}
+                              />
+                            </button>
+                            <button className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all backdrop-blur-sm">
+                              <Share2 className="w-5 h-5" />
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Bottom Info */}
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                            <span className="text-white text-sm">
+                              {theme.popularity}%
+                            </span>
+                          </div>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => openLightbox(theme)}
+                              className="flex-1 bg-white text-black px-4 py-2 rounded-lg font-medium text-sm hover:bg-gray-100 transition-all"
+                            >
+                              <Eye className="w-4 h-4 inline mr-2" />
+                              View Gallery
+                            </button>
+                            <button
+                              onClick={() => openWhatsApp(theme)}
+                              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-all"
+                            >
+                              <MessageCircle className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
                       </div>
+                    </div>
 
-                      {/* Rating */}
-                      <div className="absolute top-4 right-4 flex items-center gap-1 bg-black/70 text-white px-2 py-1 rounded-full">
-                        <Star
-                          className="text-yellow-400 fill-current"
-                          size={14}
-                        />
-                        <span className="text-sm font-medium">
-                          {theme.rating}
+                    {/* Content */}
+                    <div className="p-6">
+                      <div className="flex items-start justify-between mb-3">
+                        <h3 className="text-xl font-bold text-card-foreground">
+                          {theme.title}
+                        </h3>
+                        <span className="text-primary font-semibold text-sm">
+                          {theme.priceRange}
                         </span>
                       </div>
 
-                      {/* Title */}
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <h3 className="text-2xl font-bold text-white mb-2">
-                          {theme.title}
-                        </h3>
-                        <p className="text-white/80">{theme.price}</p>
-                      </div>
-                    </div>
-
-                    {/* Theme Content */}
-                    <div className="p-6">
-                      <p className="text-muted-foreground leading-relaxed mb-6">
+                      <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
                         {theme.description}
                       </p>
 
                       {/* Color Palette */}
-                      <div className="mb-6">
-                        <h4 className="text-sm font-semibold text-foreground mb-3">
-                          Color Palette
-                        </h4>
-                        <div className="flex gap-2">
-                          {theme.colors.map((color, idx) => (
+                      <div className="flex items-center gap-2 mb-4">
+                        <span className="text-xs text-muted-foreground">
+                          Colors:
+                        </span>
+                        <div className="flex gap-1">
+                          {theme.colors.map((color, index) => (
                             <div
-                              key={idx}
-                              className="w-8 h-8 rounded-full border-2 border-border shadow-sm"
+                              key={index}
+                              className="w-6 h-6 rounded-full border-2 border-white shadow-sm"
                               style={{ backgroundColor: color }}
+                              title={color}
                             />
                           ))}
                         </div>
                       </div>
 
-                      {/* Features */}
-                      <div className="mb-6">
-                        <h4 className="text-sm font-semibold text-foreground mb-3">
-                          Key Features
-                        </h4>
-                        <div className="flex flex-wrap gap-2">
-                          {theme.features.slice(0, 2).map((feature, idx) => (
-                            <span
-                              key={idx}
-                              className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full"
-                            >
-                              {feature}
-                            </span>
-                          ))}
-                          {theme.features.length > 2 && (
-                            <span className="text-xs text-muted-foreground">
-                              +{theme.features.length - 2} more
-                            </span>
-                          )}
-                        </div>
+                      {/* Occasions */}
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {theme.occasions.slice(0, 3).map((occasion) => (
+                          <span
+                            key={occasion}
+                            className="px-2 py-1 bg-accent text-accent-foreground rounded-lg text-xs"
+                          >
+                            {occasion}
+                          </span>
+                        ))}
                       </div>
 
-                      {/* View Details Button */}
-                      <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="w-full bg-primary text-primary-foreground py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity duration-300"
-                      >
-                        View Details
-                      </motion.button>
+                      {/* Action Buttons */}
+                      <div className="flex gap-3">
+                        <motion.button
+                          onClick={() => setIsBookingModalOpen(true)}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="flex-1 bg-primary text-primary-foreground px-4 py-3 rounded-xl font-medium text-sm hover:bg-primary/90 transition-all"
+                        >
+                          Book Now
+                        </motion.button>
+                        <motion.button
+                          onClick={() => openLightbox(theme)}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="bg-accent text-accent-foreground px-4 py-3 rounded-xl font-medium text-sm hover:bg-accent/80 transition-all"
+                        >
+                          Gallery
+                        </motion.button>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
-          </div>
-        </section>
 
-        {/* Theme Detail Modal */}
-        {selectedTheme && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            onClick={() => setSelectedTheme(null)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 50 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 50 }}
-              className="bg-card rounded-2xl overflow-hidden max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Modal Content */}
-              <div className="p-8">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-3xl font-bold text-foreground">
-                    {selectedTheme.title}
-                  </h2>
-                  <button
-                    onClick={() => setSelectedTheme(null)}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    ✕
-                  </button>
+            {/* No Results */}
+            {filteredThemes.length === 0 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-center py-16"
+              >
+                <div className="w-20 h-20 mx-auto mb-6 bg-muted rounded-full flex items-center justify-center">
+                  <Search className="w-10 h-10 text-muted-foreground" />
                 </div>
+                <h3 className="text-2xl font-bold text-foreground mb-2">
+                  No themes found
+                </h3>
+                <p className="text-muted-foreground">
+                  Try adjusting your search or filter criteria
+                </p>
+              </motion.div>
+            )}
+          </div>
+        </motion.section>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Theme Gallery Modal */}
+        <AnimatePresence>
+          {selectedTheme && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
+              onClick={() => setSelectedTheme(null)}
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                className="relative max-w-6xl max-h-[90vh] w-full bg-card rounded-3xl overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Close Button */}
+                <button
+                  onClick={() => setSelectedTheme(null)}
+                  className="absolute top-4 right-4 z-10 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+
+                {/* Navigation Buttons */}
+                <button
+                  onClick={() => navigateLightbox("prev")}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                >
+                  <ChevronLeft className="w-8 h-8" />
+                </button>
+                <button
+                  onClick={() => navigateLightbox("next")}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                >
+                  <ChevronRight className="w-8 h-8" />
+                </button>
+
+                <div className="grid lg:grid-cols-2 h-full">
                   {/* Image Gallery */}
-                  <div>
+                  <div className="relative aspect-square lg:aspect-auto">
                     <img
-                      src={selectedTheme.image}
+                      src={selectedTheme.gallery[currentImageIndex]}
                       alt={selectedTheme.title}
-                      className="w-full h-64 object-cover rounded-xl mb-4"
+                      className="w-full h-full object-cover"
                     />
-                    <div className="grid grid-cols-3 gap-2">
-                      {selectedTheme.gallery.map((img, idx) => (
-                        <img
-                          key={idx}
-                          src={img}
-                          alt={`${selectedTheme.title} ${idx + 1}`}
-                          className="w-full h-20 object-cover rounded-lg"
-                        />
-                      ))}
+
+                    {/* Image Counter */}
+                    <div className="absolute bottom-4 left-4 bg-black/50 px-3 py-1 rounded-full text-white text-sm backdrop-blur-sm">
+                      {currentImageIndex + 1} / {selectedTheme.gallery.length}
                     </div>
                   </div>
 
                   {/* Details */}
-                  <div>
-                    <p className="text-muted-foreground leading-relaxed mb-6">
+                  <div className="p-8 overflow-y-auto">
+                    <h2 className="text-3xl font-bold text-card-foreground mb-2">
+                      {selectedTheme.title}
+                    </h2>
+                    <p className="text-primary font-semibold text-lg mb-4">
+                      {selectedTheme.priceRange}
+                    </p>
+                    <p className="text-muted-foreground mb-6 leading-relaxed">
                       {selectedTheme.description}
                     </p>
 
-                    <div className="space-y-6">
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-3">
-                          Features Included
-                        </h4>
-                        <div className="space-y-2">
-                          {selectedTheme.features.map((feature, idx) => (
-                            <div key={idx} className="flex items-center gap-2">
-                              <div className="w-2 h-2 bg-primary rounded-full" />
-                              <span className="text-muted-foreground">
-                                {feature}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
+                    {/* Features */}
+                    <div className="mb-6">
+                      <h3 className="text-xl font-bold text-card-foreground mb-3">
+                        What's Included
+                      </h3>
+                      <ul className="space-y-2">
+                        {selectedTheme.features.map((feature, index) => (
+                          <li
+                            key={index}
+                            className="flex items-center gap-3 text-muted-foreground"
+                          >
+                            <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-3">
-                          Color Scheme
-                        </h4>
-                        <div className="flex gap-3">
-                          {selectedTheme.colors.map((color, idx) => (
-                            <div key={idx} className="text-center">
-                              <div
-                                className="w-12 h-12 rounded-full border-2 border-border shadow-sm mb-2"
-                                style={{ backgroundColor: color }}
-                              />
-                              <span className="text-xs text-muted-foreground">
-                                {color}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
+                    {/* Color Palette */}
+                    <div className="mb-6">
+                      <h3 className="text-xl font-bold text-card-foreground mb-3">
+                        Color Palette
+                      </h3>
+                      <div className="flex gap-3">
+                        {selectedTheme.colors.map((color, index) => (
+                          <div key={index} className="text-center">
+                            <div
+                              className="w-12 h-12 rounded-xl border-2 border-border shadow-sm mb-2"
+                              style={{ backgroundColor: color }}
+                            />
+                            <span className="text-xs text-muted-foreground">
+                              {color}
+                            </span>
+                          </div>
+                        ))}
                       </div>
+                    </div>
 
-                      <div className="flex items-center justify-between pt-6 border-t border-border">
-                        <div>
-                          <div className="text-2xl font-bold text-primary">
-                            {selectedTheme.price}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            Starting price
-                          </div>
-                        </div>
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="bg-primary text-primary-foreground px-6 py-3 rounded-xl font-semibold"
-                        >
-                          Choose This Theme
-                        </motion.button>
+                    {/* Occasions */}
+                    <div className="mb-8">
+                      <h3 className="text-xl font-bold text-card-foreground mb-3">
+                        Perfect For
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedTheme.occasions.map((occasion) => (
+                          <span
+                            key={occasion}
+                            className="px-3 py-1 bg-accent text-accent-foreground rounded-lg text-sm"
+                          >
+                            {occasion}
+                          </span>
+                        ))}
                       </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-4">
+                      <motion.button
+                        onClick={() => {
+                          setSelectedTheme(null);
+                          setIsBookingModalOpen(true);
+                        }}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="flex-1 bg-primary text-primary-foreground px-6 py-4 rounded-xl font-medium flex items-center justify-center gap-3"
+                      >
+                        <Calendar className="w-5 h-5" />
+                        Book This Theme
+                      </motion.button>
+                      <motion.button
+                        onClick={() => openWhatsApp(selectedTheme)}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="bg-green-600 text-white px-6 py-4 rounded-xl font-medium flex items-center justify-center gap-3"
+                      >
+                        <MessageCircle className="w-5 h-5" />
+                        WhatsApp
+                      </motion.button>
                     </div>
                   </div>
                 </div>
-              </div>
+
+                {/* Thumbnail Gallery */}
+                <div className="absolute bottom-0 left-0 right-0 bg-black/50 backdrop-blur-sm p-4">
+                  <div className="flex gap-2 justify-center">
+                    {selectedTheme.gallery.map((img, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentImageIndex(index)}
+                        className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                          currentImageIndex === index
+                            ? "border-primary"
+                            : "border-transparent"
+                        }`}
+                      >
+                        <img
+                          src={img}
+                          alt={`${selectedTheme.title} ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Modals */}
       <ContactModal
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}
@@ -533,6 +785,6 @@ export default function Themes() {
         isOpen={isBookingModalOpen}
         onClose={() => setIsBookingModalOpen(false)}
       />
-    </div>
+    </>
   );
 }
