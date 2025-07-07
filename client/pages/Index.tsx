@@ -15,8 +15,14 @@ import ClientStories from "../components/ClientStories";
 export default function Index() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(() => {
+    // Only show loader on first visit in this session
+    return !sessionStorage.getItem("hasVisited");
+  });
+  const [isLoaded, setIsLoaded] = useState(() => {
+    // If already visited, mark as loaded immediately
+    return !!sessionStorage.getItem("hasVisited");
+  });
 
   // Smooth scrolling setup
   useEffect(() => {
@@ -46,6 +52,7 @@ export default function Index() {
         onComplete={() => {
           setIsLoading(false);
           setIsLoaded(true);
+          sessionStorage.setItem("hasVisited", "true");
         }}
         showLoader={isLoading}
       />

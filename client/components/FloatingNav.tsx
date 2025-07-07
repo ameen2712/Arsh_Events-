@@ -119,27 +119,26 @@ export default function FloatingNav({
                 {/* Left side spacer */}
                 <div className="w-24"></div>
 
-                {/* Center - Brand Logo (clickable to go home) */}
-                <Link to="/" className="flex items-center gap-3">
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-3 cursor-pointer"
-                  >
-                    <AnimatedLogo size="md" />
-                    <div>
-                      <h1
-                        className="text-2xl font-bold text-foreground"
-                        style={{ fontFamily: "Cinzel Decorative, serif" }}
-                      >
-                        Arsh Events
-                      </h1>
-                      <p className="text-xs text-primary font-signature">
-                        Legendary Celebrations
-                      </p>
-                    </div>
-                  </motion.div>
-                </Link>
+                {/* Center - Brand Logo (clickable for theme toggle) */}
+                <motion.div
+                  onClick={() => setIsDarkMode(!isDarkMode)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-3 cursor-pointer"
+                >
+                  <AnimatedLogo size="md" />
+                  <div>
+                    <h1
+                      className="text-2xl font-bold text-foreground"
+                      style={{ fontFamily: "Cinzel Decorative, serif" }}
+                    >
+                      Arsh Events
+                    </h1>
+                    <p className="text-xs text-primary font-signature">
+                      Legendary Celebrations
+                    </p>
+                  </div>
+                </motion.div>
 
                 {/* Right side - Actions */}
                 <div className="flex items-center gap-4">
