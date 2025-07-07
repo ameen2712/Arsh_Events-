@@ -7,6 +7,8 @@ import {
   Phone,
   MapPin,
   ArrowUp,
+  Heart,
+  MessageCircle,
 } from "lucide-react";
 
 export default function Footer() {
@@ -39,7 +41,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative bg-gradient-to-br from-luxury-midnight to-luxury-purple text-white overflow-hidden">
+    <footer className="relative bg-card border-t border-border overflow-hidden">
       {/* Decorative Wave */}
       <div className="absolute top-0 left-0 right-0">
         <svg
