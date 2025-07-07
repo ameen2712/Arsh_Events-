@@ -29,7 +29,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-36"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-40"
     >
       {/* Background Video/Image with Parallax */}
       <motion.div style={{ y, scale }} className="absolute inset-0 z-0">
@@ -90,25 +90,11 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
         style={{ opacity }}
         className="relative z-20 text-center px-6 max-w-6xl mx-auto"
       >
-        {/* Pre-title */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="flex items-center justify-center gap-3 mb-6"
-        >
-          <div className="h-px bg-gradient-to-r from-transparent via-cinematic-gold to-transparent w-20" />
-          <span className="text-cinematic-gold/80 font-signature tracking-wider">
-            Arsh Events – Legendary Celebrations
-          </span>
-          <div className="h-px bg-gradient-to-r from-transparent via-cinematic-gold to-transparent w-20" />
-        </motion.div>
-
         {/* Main Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.7 }}
+          transition={{ duration: 1, delay: 0.3 }}
           className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-white leading-tight mb-8"
           style={{ fontFamily: "Playfair Display, serif" }}
         >
@@ -138,7 +124,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.3 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
           className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed"
           style={{ fontFamily: "Poppins, sans-serif" }}
         >
@@ -152,7 +138,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.5 }}
+          transition={{ duration: 0.8, delay: 1.0 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-6"
         >
           <motion.button
@@ -191,7 +177,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.7 }}
+          transition={{ duration: 0.8, delay: 1.2 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-8 border-t border-white/20"
         >
           {[
@@ -204,7 +190,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
               key={stat.label}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.8 + index * 0.1 }}
+              transition={{ delay: 1.3 + index * 0.1 }}
               className="text-center"
             >
               <div className="flex items-center justify-center mb-2">
