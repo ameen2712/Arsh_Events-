@@ -94,69 +94,107 @@ export default function FloatingNav({
 
   return (
     <>
+      {/* Smart Search Modal */}
+      <SmartSearchModal
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+      />
+
       {/* Top Tier Navbar - Deep Black */}
-      <motion.div
-        variants={{
-          visible: { y: 0, opacity: 1 },
-          hidden: { y: -100, opacity: 0 },
-        }}
-        animate={isHidden ? "hidden" : "visible"}
-        initial={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed top-0 w-full bg-black z-50 border-b border-gray-800"
-      >
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between h-12 text-sm">
-            {/* Left side - Logo for mobile */}
-            <div className="flex items-center md:hidden">
-              <span className="text-white font-bold">Arsh Events</span>
-            </div>
+      <NavbarEntranceAnimation delay={0}>
+        <ContextAwareNav>
+          <motion.div
+            variants={{
+              visible: { y: 0, opacity: 1 },
+              hidden: { y: -100, opacity: 0 },
+            }}
+            animate={isHidden ? "hidden" : "visible"}
+            initial={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="fixed top-0 w-full bg-black z-50 border-b border-gray-800"
+          >
+            <div className="container mx-auto px-4 sm:px-6">
+              <div className="flex items-center justify-between h-12 text-sm">
+                {/* Left side - Logo for mobile */}
+                <div className="flex items-center md:hidden">
+                  <AnimatedLogo size="sm" />
+                  <span className="text-white font-bold ml-2">Arsh Events</span>
+                </div>
 
-            {/* Right side - Actions */}
-            <div className="flex items-center gap-4 ml-auto">
-              {/* Search Icon */}
-              <button className="text-gray-300 hover:text-white transition-colors p-1">
-                <Search size={16} />
-              </button>
+                {/* Right side - Actions */}
+                <div className="flex items-center gap-4 ml-auto">
+                  {/* Search Icon with Magnetic Effect */}
+                  <motion.button
+                    ref={searchButtonMagnetic.ref}
+                    style={{
+                      x: searchButtonMagnetic.x,
+                      y: searchButtonMagnetic.y,
+                    }}
+                    onClick={() => setIsSearchOpen(true)}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="text-gray-300 hover:text-cinematic-gold transition-colors p-1 relative group"
+                  >
+                    <Search size={16} />
+                    <div className="absolute inset-0 bg-cinematic-gold/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 -m-1" />
+                  </motion.button>
 
-              {/* Dark Mode Toggle */}
-              <button
-                onClick={() => setIsDarkMode(!isDarkMode)}
-                className="text-gray-300 hover:text-white transition-colors p-1"
-              >
-                {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
-              </button>
+                  <NavDivider />
 
-              {/* Login / Sign-up */}
-              <div className="hidden sm:flex items-center gap-3">
-                <button className="text-gray-300 hover:text-white transition-colors flex items-center gap-1">
-                  <User size={16} />
-                  <span>LOGIN</span>
-                </button>
-                <button className="text-gray-300 hover:text-white transition-colors flex items-center gap-1">
-                  <UserPlus size={16} />
-                  <span>SIGN-UP</span>
-                </button>
+                  {/* Dark Mode Toggle */}
+                  <motion.button
+                    onClick={() => setIsDarkMode(!isDarkMode)}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="text-gray-300 hover:text-cinematic-gold transition-colors p-1"
+                  >
+                    {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
+                  </motion.button>
+
+                  <NavDivider />
+
+                  {/* Login / Sign-up */}
+                  <div className="hidden sm:flex items-center gap-3">
+                    <motion.button
+                      whileHover={{ scale: 1.05, y: -1 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="text-gray-300 hover:text-white transition-colors flex items-center gap-1"
+                    >
+                      <User size={16} />
+                      <span>LOGIN</span>
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.05, y: -1 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="text-gray-300 hover:text-white transition-colors flex items-center gap-1"
+                    >
+                      <UserPlus size={16} />
+                      <span>SIGN-UP</span>
+                    </motion.button>
+                  </div>
+
+                  <NavDivider className="hidden md:block" />
+
+                  {/* Language Switcher */}
+                  <div className="hidden md:block">
+                    <LanguageSwitcher />
+                  </div>
+
+                  {/* Mobile Menu Toggle */}
+                  <motion.button
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="md:hidden text-gray-300 hover:text-white transition-colors p-1"
+                  >
+                    {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+                  </motion.button>
+                </div>
               </div>
-
-              {/* Country Selector */}
-              <div className="hidden md:flex items-center gap-2 text-gray-300 hover:text-white transition-colors cursor-pointer">
-                <span className="text-lg">🇮🇳</span>
-                <span className="text-xs">UAE</span>
-                <ChevronDown size={14} />
-              </div>
-
-              {/* Mobile Menu Toggle */}
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden text-gray-300 hover:text-white transition-colors p-1"
-              >
-                {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
-              </button>
             </div>
-          </div>
-        </div>
-      </motion.div>
+          </motion.div>
+        </ContextAwareNav>
+      </NavbarEntranceAnimation>
 
       {/* Second Tier Navbar - Charcoal Grey with Pattern */}
       <motion.div
