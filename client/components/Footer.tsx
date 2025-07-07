@@ -42,21 +42,7 @@ export default function Footer() {
 
   return (
     <footer className="relative bg-card border-t border-border overflow-hidden">
-      {/* Decorative Wave */}
-      <div className="absolute top-0 left-0 right-0">
-        <svg
-          viewBox="0 0 1200 120"
-          fill="none"
-          className="w-full h-12 text-white"
-        >
-          <path
-            d="M0,0 C0,0 300,120 600,60 C900,0 1200,60 1200,60 L1200,120 L0,120 Z"
-            fill="currentColor"
-          />
-        </svg>
-      </div>
-
-      <div className="container mx-auto px-6 pt-20 pb-8">
+      <div className="container mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand Section */}
           <motion.div
@@ -67,25 +53,32 @@ export default function Footer() {
             className="space-y-6"
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-luxury-gold to-luxury-peach rounded-full flex items-center justify-center">
-                <span className="text-luxury-midnight font-bold text-lg">
-                  E
+              <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center">
+                <span className="text-primary-foreground font-bold text-xl">
+                  A
                 </span>
               </div>
-              <h3 className="text-2xl font-heading font-bold">Arsh Events</h3>
+              <div>
+                <h3 className="text-2xl font-heading font-bold text-foreground">
+                  Arsh Events
+                </h3>
+                <p className="text-xs text-primary font-signature">
+                  Legendary Celebrations
+                </p>
+              </div>
             </div>
-            <p className="text-gray-300 font-body leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed">
               Creating magical moments and unforgettable celebrations across
               Andhra Pradesh. Where dreams meet reality in perfect harmony.
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-3">
               {socialLinks.map((social, index) => (
                 <motion.a
                   key={index}
                   href={social.href}
-                  whileHover={{ scale: 1.2, y: -2 }}
+                  whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.9 }}
-                  className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-luxury-gold transition-all duration-300"
+                  className="w-10 h-10 bg-primary/10 hover:bg-primary text-muted-foreground hover:text-primary-foreground rounded-full flex items-center justify-center transition-all duration-300"
                   aria-label={social.label}
                 >
                   {social.icon}
