@@ -11,6 +11,7 @@ import FloatingActionButton from "../components/FloatingActionButton";
 import DynamicBackground from "../components/DynamicBackground";
 import { BackgroundSparkles } from "../components/DecorativeDividers";
 import ClientStories from "../components/ClientStories";
+import { useLenis } from "../hooks/useLenis";
 
 export default function Index() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -24,26 +25,28 @@ export default function Index() {
     return !!sessionStorage.getItem("hasVisited");
   });
 
-  // Smooth scrolling setup
-  useEffect(() => {
-    const handleSmoothScroll = (e: Event) => {
-      const target = e.target as HTMLAnchorElement;
-      if (target.href && target.href.includes("#")) {
-        e.preventDefault();
-        const id = target.href.split("#")[1];
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
-      }
-    };
+  // Initialize Lenis for smooth scrolling
+  const { stop, start } = useLenis();
 
-    document.addEventListener("click", handleSmoothScroll);
-    return () => document.removeEventListener("click", handleSmoothScroll);
-  }, []);
+  // Handle modal scroll behavior
+  useEffect(() => {
+    if (isContactModalOpen || isBookingModalOpen) {
+      // Stop Lenis when modal is open
+      stop();
+      // Prevent body scroll
+      document.body.style.overflow = "hidden";
+    } else {
+      // Start Lenis when modal is closed
+      start();
+      // Restore body scroll
+      document.body.style.overflow = "unset";
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isContactModalOpen, isBookingModalOpen, stop, start]);
 
   return (
     <>
@@ -84,7 +87,7 @@ export default function Index() {
           <main>
             {/* Hero Section */}
             <section id="home" className="relative">
-              <HeroSection onOpenBooking={() => setIsBookingModalOpen(true)} />
+              <HeroSection />
             </section>
 
             {/* Cities Section */}

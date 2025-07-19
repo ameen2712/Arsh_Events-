@@ -1,6 +1,7 @@
-import { motion } from "framer-motion";
-import { Star, Quote, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Star, Quote, ArrowRight, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useModalLenis } from "../hooks/useModalLenis";
 
 interface ClientStory {
   id: string;
@@ -49,45 +50,73 @@ const clientStories: ClientStory[] = [
     description:
       "The entire venue was bathed in marigold and sunshine as we created a traditional Haldi ceremony that honored heritage while embracing modern elegance.",
     fullStory:
-      "Anitha and Kiran wanted their Haldi ceremony to reflect their deep roots in Telugu tradition while incorporating contemporary elements. We designed a stunning mandap using thousands of fresh marigolds, turmeric-yellow silk drapes, and traditional brass elements. The courtyard was adorned with hanging jasmine installations, and we created designated spaces for different rituals. Traditional dhol players and dancers added authentic energy while professional photographers captured every golden moment. The ceremony concluded with a shower of flower petals, creating memories that will last a lifetime.",
+      "Anitha and Kiran wanted their Haldi ceremony to be both traditional and Instagram-worthy. We draped the entire venue in fresh marigolds, created a stunning backdrop with yellow flowers and brass urns, and set up comfortable seating areas with colorful cushions. The highlight was the custom Haldi station where guests could participate in the ceremony while enjoying traditional snacks and fresh coconut water.",
     image:
-      "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1583009817279-09e9c6ecec6f?w=600&h=400&fit=crop",
     rating: 5,
     eventDate: "February 2024",
-    guestCount: 200,
+    guestCount: 120,
     highlights: [
-      "🌼 5000+ marigolds",
-      "🥁 Traditional dhol",
-      "📸 Professional photography",
-      "🌺 Jasmine installations",
+      "🌸 Traditional marigold décor",
+      "🎨 Henna artists",
+      "🥁 Live dhol players",
+      "📸 Candid photography",
     ],
   },
   {
     id: "3",
     title: "Corporate Gala in Vijayawada",
-    clientName: "TechNova Solutions",
+    clientName: "TechnoVision Solutions",
     location: "Vijayawada",
     eventType: "Corporate Event",
     description:
-      "Luxury meets innovation: For TechNova's annual celebration, we created a sophisticated evening with live jazz, gold décor, and cutting-edge light projections.",
+      "A night of excellence and celebration as TechnoVision marked their 10th anniversary with style, sophistication, and memorable experiences.",
     fullStory:
-      "TechNova Solutions wanted their annual corporate gala to reflect their position as industry leaders while celebrating their team's achievements. We transformed the riverside venue with sophisticated gold and black décor, featuring geometric patterns and modern art installations. A live jazz quartet set the mood while interactive light projections displayed the company's journey and milestones. The evening included award ceremonies, team recognitions, and networking spaces with premium catering. The event perfectly balanced corporate professionalism with celebratory elegance, leaving a lasting impression on all 300 attendees.",
+      "TechnoVision's 10th anniversary gala was a testament to their growth and success. We transformed the venue into a sophisticated space with modern lighting, elegant table settings, and a stage for award presentations. The evening featured a three-course gourmet dinner, live entertainment, and a recognition ceremony that celebrated the company's achievements and honored their dedicated employees.",
     image:
       "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&h=400&fit=crop",
     rating: 5,
     eventDate: "January 2024",
-    guestCount: 300,
+    guestCount: 200,
     highlights: [
-      "🎷 Live jazz quartet",
-      "💡 Light projections",
+      "🎭 Live entertainment",
+      "🍽️ Gourmet dining",
       "🏆 Award ceremony",
-      "🍾 Premium catering",
+      "💼 Networking lounge",
     ],
   },
 ];
 
 export default function ClientStories() {
   const [selectedStory, setSelectedStory] = useState<ClientStory | null>(null);
+
+  // Initialize modal Lenis when story is selected
+  useModalLenis(!!selectedStory, ".modal-scroll-container");
+
+  // Handle body scroll lock when modal is open
+  useEffect(() => {
+    if (selectedStory) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [selectedStory]);
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && selectedStory) {
+        setSelectedStory(null);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [selectedStory]);
 
   return (
     <section className="py-32 bg-muted/30">
@@ -100,238 +129,234 @@ export default function ClientStories() {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="w-24 h-1 bg-gradient-to-r from-primary to-primary/60 mx-auto mb-6 rounded-full"
-          />
-
-          <h2 className="text-5xl md:text-6xl font-heading font-bold mb-6 text-foreground">
-            Client Stories
-            <span className="block text-primary">That Inspire Us</span>
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <Quote size={16} />
+            Client Stories That Inspire Us
+          </div>
+          <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">
+            Stories of <span className="text-shimmer">Pure Joy</span>
           </h2>
-
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Every celebration tells a unique story. Here are some of our
-            favorite moments from recent events that showcase the magic we
-            create together.
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Every celebration has a story. Here are some of our favorite moments
+            where dreams became reality and created memories for a lifetime.
           </p>
         </motion.div>
 
         {/* Stories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {clientStories.map((story, index) => (
             <motion.div
               key={story.id}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
               className="group cursor-pointer"
               onClick={() => setSelectedStory(story)}
             >
-              <div className="bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-[1.02]">
+              <div className="glass rounded-2xl overflow-hidden hover:shadow-cinematic transition-all duration-500 hover:-translate-y-2">
                 {/* Story Image */}
                 <div className="relative h-64 overflow-hidden">
-                  <motion.img
+                  <img
                     src={story.image}
                     alt={story.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-
-                  {/* Event Type Badge */}
-                  <div className="absolute top-4 left-4 bg-primary/90 text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
-                    {story.eventType}
-                  </div>
-
-                  {/* Rating */}
-                  <div className="absolute top-4 right-4 flex items-center gap-1 bg-black/70 text-white px-2 py-1 rounded-full">
-                    <Star className="text-yellow-400 fill-current" size={14} />
-                    <span className="text-sm font-medium">{story.rating}</span>
-                  </div>
-
-                  {/* Quote Icon */}
-                  <div className="absolute bottom-4 right-4 bg-white/90 p-2 rounded-full">
-                    <Quote className="text-primary" size={16} />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-4 left-4 text-white">
+                    <div className="flex items-center gap-1 mb-2">
+                      {Array.from({ length: story.rating }).map((_, i) => (
+                        <Star
+                          key={i}
+                          className="text-yellow-400 fill-current"
+                          size={14}
+                        />
+                      ))}
+                    </div>
+                    <span className="text-xs opacity-80">
+                      {story.eventType}
+                    </span>
                   </div>
                 </div>
 
                 {/* Story Content */}
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-card-foreground mb-2 group-hover:text-primary transition-colors">
+                  <h3 className="text-xl font-heading font-bold mb-3 group-hover:text-primary transition-colors">
                     {story.title}
                   </h3>
-
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-                    <span>{story.clientName}</span>
-                    <span>•</span>
-                    <span>{story.location}</span>
-                    <span>•</span>
-                    <span>{story.eventDate}</span>
-                  </div>
-
-                  <p className="text-muted-foreground leading-relaxed mb-4 line-clamp-3">
+                  <p className="text-muted-foreground mb-4 line-clamp-3">
                     {story.description}
                   </p>
-
-                  {/* Highlights */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {story.highlights.slice(0, 2).map((highlight, idx) => (
-                      <span
-                        key={idx}
-                        className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full"
-                      >
-                        {highlight}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Read More */}
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">
-                      {story.guestCount} guests
-                    </span>
-                    <div className="flex items-center gap-1 text-primary font-medium text-sm group-hover:gap-2 transition-all">
-                      <span>Read Full Story</span>
-                      <ArrowRight size={14} />
+                    <div>
+                      <p className="font-medium text-sm">{story.clientName}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {story.location}
+                      </p>
                     </div>
+                    <motion.div
+                      className="flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transition-opacity"
+                      whileHover={{ x: 5 }}
+                    >
+                      <span className="text-sm">Read More</span>
+                      <ArrowRight size={16} />
+                    </motion.div>
                   </div>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
-
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-3xl p-12">
-            <h3 className="text-3xl font-bold text-foreground mb-4">
-              Ready to Create Your Own Story?
-            </h3>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Let's turn your vision into an unforgettable celebration that you
-              and your guests will treasure forever.
-            </p>
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-primary text-primary-foreground px-8 py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              Start Planning Your Event
-            </motion.button>
-          </div>
-        </motion.div>
       </div>
 
-      {/* Full Story Modal */}
-      {selectedStory && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedStory(null)}
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 50 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 50 }}
-            className="bg-card rounded-2xl overflow-hidden max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal Header */}
-            <div className="relative h-64">
-              <img
-                src={selectedStory.image}
-                alt={selectedStory.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <button
-                onClick={() => setSelectedStory(null)}
-                className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition-colors"
+      {/* Enhanced Full Story Modal */}
+      <AnimatePresence>
+        {selectedStory && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/80 backdrop-blur-md z-50"
+              onClick={() => setSelectedStory(null)}
+            />
+
+            {/* Modal Container */}
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 50 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 50 }}
+                transition={{
+                  type: "spring",
+                  damping: 20,
+                  stiffness: 300,
+                  duration: 0.3,
+                }}
+                className="modal-scroll-container bg-card rounded-3xl overflow-hidden max-w-4xl w-full max-h-[90vh] shadow-cinematic"
+                onClick={(e) => e.stopPropagation()}
               >
-                ✕
-              </button>
-              <div className="absolute bottom-6 left-6 text-white">
-                <h2 className="text-3xl font-bold mb-2">
-                  {selectedStory.title}
-                </h2>
-                <p className="text-white/80">
-                  {selectedStory.clientName} • {selectedStory.location}
-                </p>
-              </div>
-            </div>
-
-            {/* Modal Content */}
-            <div className="p-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">
-                    {selectedStory.guestCount}
-                  </div>
-                  <div className="text-sm text-muted-foreground">Guests</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">
-                    {selectedStory.eventDate}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    Event Date
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="flex items-center justify-center gap-1">
-                    {Array.from({ length: selectedStory.rating }).map(
-                      (_, i) => (
-                        <Star
-                          key={i}
-                          className="text-yellow-400 fill-current"
-                          size={16}
-                        />
-                      ),
-                    )}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    Client Rating
-                  </div>
-                </div>
-              </div>
-
-              <div className="prose prose-lg max-w-none">
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  {selectedStory.fullStory}
-                </p>
-              </div>
-
-              {/* Highlights */}
-              <div className="mb-6">
-                <h4 className="text-lg font-semibold text-foreground mb-4">
-                  Event Highlights
-                </h4>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  {selectedStory.highlights.map((highlight, idx) => (
-                    <div
-                      key={idx}
-                      className="bg-primary/10 text-primary px-3 py-2 rounded-lg text-center text-sm font-medium"
+                {/* Scrollable Content */}
+                <div className="modal-inner overflow-y-auto h-full">
+                  {/* Modal Header */}
+                  <div className="relative h-64">
+                    <img
+                      src={selectedStory.image}
+                      alt={selectedStory.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                    <motion.button
+                      onClick={() => setSelectedStory(null)}
+                      whileHover={{ scale: 1.1, rotate: 90 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="absolute top-6 right-6 bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-all duration-200 z-10"
+                      aria-label="Close modal"
                     >
-                      {highlight}
+                      <X size={20} />
+                    </motion.button>
+                    <div className="absolute bottom-6 left-6 text-white">
+                      <h2 className="text-3xl font-bold mb-2">
+                        {selectedStory.title}
+                      </h2>
+                      <p className="text-white/80">
+                        {selectedStory.clientName} • {selectedStory.location}
+                      </p>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Modal Content */}
+                  <div className="p-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-primary">
+                          {selectedStory.guestCount}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Guests
+                        </div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-primary">
+                          {selectedStory.eventDate}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Event Date
+                        </div>
+                      </div>
+                      <div className="text-center">
+                        <div className="flex items-center justify-center gap-1">
+                          {Array.from({ length: selectedStory.rating }).map(
+                            (_, i) => (
+                              <Star
+                                key={i}
+                                className="text-yellow-400 fill-current"
+                                size={16}
+                              />
+                            ),
+                          )}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Client Rating
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="prose prose-lg max-w-none">
+                      <p className="text-muted-foreground leading-relaxed mb-6">
+                        {selectedStory.fullStory}
+                      </p>
+                    </div>
+
+                    {/* Highlights */}
+                    <div className="mb-6">
+                      <h4 className="text-lg font-semibold text-foreground mb-4">
+                        Event Highlights
+                      </h4>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        {selectedStory.highlights.map((highlight, idx) => (
+                          <div
+                            key={idx}
+                            className="bg-primary/10 text-primary px-3 py-2 rounded-lg text-center text-sm font-medium"
+                          >
+                            {highlight}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Additional Mock Content for Testing Scroll */}
+                    <div className="border-t pt-6">
+                      <h4 className="text-lg font-semibold text-foreground mb-4">
+                        Behind the Scenes
+                      </h4>
+                      <p className="text-muted-foreground mb-4">
+                        Planning this event required weeks of preparation and
+                        coordination with multiple vendors. Our team worked
+                        tirelessly to ensure every detail was perfect, from the
+                        initial concept to the final execution.
+                      </p>
+                      <p className="text-muted-foreground mb-4">
+                        The client's vision was clear from our first meeting -
+                        they wanted something magical and unforgettable. We
+                        spent hours discussing themes, colors, and entertainment
+                        options to create the perfect atmosphere.
+                      </p>
+                      <p className="text-muted-foreground">
+                        The result exceeded everyone's expectations and created
+                        memories that will last a lifetime. This is what we live
+                        for - seeing the joy and wonder on our clients' faces
+                        when their dreams come to life.
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </motion.div>
-        </motion.div>
-      )}
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

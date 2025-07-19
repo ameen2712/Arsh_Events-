@@ -1,9 +1,10 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, Play, Sparkles, Heart, Star } from "lucide-react";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 interface HeroSectionProps {
-  onOpenBooking: () => void;
+  onOpenBooking?: () => void;
 }
 
 export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
@@ -141,36 +142,39 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
           transition={{ duration: 0.8, delay: 1.0 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-6"
         >
-          <motion.button
-            onClick={onOpenBooking}
-            whileHover={{
-              scale: 1.05,
-              y: -5,
-              boxShadow: "0 20px 40px rgba(139, 92, 246, 0.4)",
-            }}
-            whileTap={{ scale: 0.95 }}
-            className="group relative overflow-hidden bg-gradient-to-r from-cinematic-purple to-cinematic-gold text-white px-12 py-4 rounded-full font-semibold text-lg"
-          >
-            <motion.div className="absolute inset-0 bg-gradient-to-r from-cinematic-gold to-cinematic-purple opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <span className="relative flex items-center gap-3">
-              <Sparkles size={20} />
-              Explore Our Magic
-            </span>
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            className="group glass px-8 py-4 rounded-full text-white font-semibold text-lg flex items-center gap-3 hover:bg-white/20 transition-all duration-300"
-          >
-            <motion.div
-              whileHover={{ scale: 1.2 }}
-              className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center"
+          <Link to="/booking">
+            <motion.button
+              whileHover={{
+                scale: 1.05,
+                y: -5,
+                boxShadow: "0 20px 40px rgba(139, 92, 246, 0.4)",
+              }}
+              whileTap={{ scale: 0.95 }}
+              className="group relative overflow-hidden bg-gradient-to-r from-cinematic-purple to-cinematic-gold text-white px-12 py-4 rounded-full font-semibold text-lg"
             >
-              <Play size={16} className="ml-1" />
-            </motion.div>
-            Watch Our Story
-          </motion.button>
+              <motion.div className="absolute inset-0 bg-gradient-to-r from-cinematic-gold to-cinematic-purple opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <span className="relative flex items-center gap-3">
+                <Sparkles size={20} />
+                Explore Our Magic
+              </span>
+            </motion.button>
+          </Link>
+
+          <Link to="/watch-stories">
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className="group glass px-8 py-4 rounded-full text-white font-semibold text-lg flex items-center gap-3 hover:bg-white/20 transition-all duration-300"
+            >
+              <motion.div
+                whileHover={{ scale: 1.2 }}
+                className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center"
+              >
+                <Play size={16} className="ml-1" />
+              </motion.div>
+              Watch Our Story
+            </motion.button>
+          </Link>
         </motion.div>
 
         {/* Stats */}
