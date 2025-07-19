@@ -2,13 +2,21 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, Play, Sparkles, Heart, Star } from "lucide-react";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { ParallaxBackground, FloatingElement } from "./ParallaxBackground";
+import { useCounterAnimation } from "@/hooks/useScrollAnimation";
+import { useCommonQueries } from "@/hooks/useResponsive";
 
 interface HeroSectionProps {
   onOpenBooking?: () => void;
+  onOpenContact?: () => void;
 }
 
-export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
+export default function HeroSection({
+  onOpenBooking,
+  onOpenContact,
+}: HeroSectionProps) {
   const heroRef = useRef<HTMLDivElement>(null);
+  const { isMobile, prefersReducedMotion } = useCommonQueries();
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
@@ -18,7 +26,9 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
-  const particles = Array.from({ length: 50 }, (_, i) => ({
+  // Reduce particles on mobile for better performance
+  const particleCount = isMobile ? 20 : 50;
+  const particles = Array.from({ length: particleCount }, (_, i) => ({
     id: i,
     size: Math.random() * 4 + 2,
     x: Math.random() * 100,
@@ -58,31 +68,39 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-cinematic-midnight/80 via-transparent to-cinematic-midnight/40" />
       </motion.div>
 
-      {/* Floating Particles */}
+      {/* Enhanced Floating Elements */}
       <div className="absolute inset-0 z-10">
-        {particles.map((particle) => (
-          <motion.div
+        {particles.map((particle, index) => (
+          <FloatingElement
             key={particle.id}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
-              y: [0, -100],
-            }}
-            transition={{
-              duration: particle.duration,
-              delay: particle.delay,
-              repeat: Infinity,
-              ease: "easeOut",
-            }}
-            className="absolute rounded-full bg-gradient-to-r from-cinematic-purple to-cinematic-gold"
+            speed={0.5 + index * 0.1}
+            direction={index % 2 === 0 ? "up" : "down"}
+            className="absolute"
             style={{
               left: `${particle.x}%`,
               top: `${particle.y}%`,
-              width: `${particle.size}px`,
-              height: `${particle.size}px`,
             }}
-          />
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{
+                opacity: [0, 0.6, 0],
+                scale: [0, 1, 0],
+                rotate: [0, 180, 360],
+              }}
+              transition={{
+                duration: particle.duration,
+                delay: particle.delay,
+                repeat: Infinity,
+                ease: "easeOut",
+              }}
+              className="rounded-full bg-gradient-to-r from-cinematic-purple to-cinematic-gold blur-sm"
+              style={{
+                width: `${particle.size}px`,
+                height: `${particle.size}px`,
+              }}
+            />
+          </FloatingElement>
         ))}
       </div>
 
@@ -93,6 +111,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
       >
         {/* Main Headline */}
         <motion.h1
+          id="hero-heading"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
@@ -142,23 +161,23 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
           transition={{ duration: 0.8, delay: 1.0 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-6"
         >
-          <Link to="/booking">
-            <motion.button
-              whileHover={{
-                scale: 1.05,
-                y: -5,
-                boxShadow: "0 20px 40px rgba(139, 92, 246, 0.4)",
-              }}
-              whileTap={{ scale: 0.95 }}
-              className="group relative overflow-hidden bg-gradient-to-r from-cinematic-purple to-cinematic-gold text-white px-12 py-4 rounded-full font-semibold text-lg"
-            >
-              <motion.div className="absolute inset-0 bg-gradient-to-r from-cinematic-gold to-cinematic-purple opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <span className="relative flex items-center gap-3">
-                <Sparkles size={20} />
-                Explore Our Magic
-              </span>
-            </motion.button>
-          </Link>
+          <motion.button
+            onClick={onOpenBooking}
+            whileHover={{
+              scale: 1.05,
+              y: -5,
+              boxShadow: "0 20px 40px rgba(139, 92, 246, 0.4)",
+            }}
+            whileTap={{ scale: 0.95 }}
+            className="group relative overflow-hidden bg-gradient-to-r from-cinematic-purple to-cinematic-gold text-white px-12 py-4 rounded-full font-semibold text-lg"
+            aria-label="Start planning your event"
+          >
+            <motion.div className="absolute inset-0 bg-gradient-to-r from-cinematic-gold to-cinematic-purple opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <span className="relative flex items-center gap-3">
+              <Sparkles size={20} />
+              Start Planning
+            </span>
+          </motion.button>
 
           <Link to="/watch-stories">
             <motion.button
@@ -177,7 +196,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
           </Link>
         </motion.div>
 
-        {/* Stats */}
+        {/* Stats with Counter Animation */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -185,27 +204,24 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
           className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-8 border-t border-white/20"
         >
           {[
-            { number: "500+", label: "Dream Events", icon: Heart },
-            { number: "3", label: "Cities", icon: Sparkles },
-            { number: "98%", label: "Happy Couples", icon: Star },
-            { number: "5★", label: "Average Rating", icon: Star },
-          ].map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.3 + index * 0.1 }}
-              className="text-center"
-            >
-              <div className="flex items-center justify-center mb-2">
-                <stat.icon className="text-cinematic-gold mr-2" size={20} />
-                <span className="text-3xl font-bold text-white">
-                  {stat.number}
-                </span>
-              </div>
-              <span className="text-white/60 text-sm">{stat.label}</span>
-            </motion.div>
-          ))}
+            { number: 500, suffix: "+", label: "Dream Events", icon: Heart },
+            { number: 3, suffix: "", label: "Cities", icon: Sparkles },
+            { number: 98, suffix: "%", label: "Happy Couples", icon: Star },
+            { number: 5, suffix: "★", label: "Average Rating", icon: Star },
+          ].map((stat, index) => {
+            const StatIcon = stat.icon;
+
+            return (
+              <CounterStatCard
+                key={stat.label}
+                number={stat.number}
+                suffix={stat.suffix}
+                label={stat.label}
+                icon={StatIcon}
+                delay={1.3 + index * 0.1}
+              />
+            );
+          })}
         </motion.div>
       </motion.div>
 
@@ -247,3 +263,41 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
     </section>
   );
 }
+
+// Counter stat card component with animation
+interface CounterStatCardProps {
+  number: number;
+  suffix: string;
+  label: string;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  delay: number;
+}
+
+const CounterStatCard: React.FC<CounterStatCardProps> = ({
+  number,
+  suffix,
+  label,
+  icon: Icon,
+  delay,
+}) => {
+  const { ref, count } = useCounterAnimation(number, 2000);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay }}
+      className="text-center"
+    >
+      <div className="flex items-center justify-center mb-2">
+        <Icon className="text-cinematic-gold mr-2" size={20} />
+        <span className="text-3xl font-bold text-white">
+          {count}
+          {suffix}
+        </span>
+      </div>
+      <span className="text-white/60 text-sm">{label}</span>
+    </motion.div>
+  );
+};

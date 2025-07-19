@@ -4,6 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import interactive feedback styles */
+@import "./lib/interactive-styles.css";
+
 @layer base {
   /**
    * Cinematic Events Experience Theme

@@ -21,6 +21,9 @@ import { GlassDropdown } from "./EnhancedGlass";
 import EnhancedMobileMenu from "./EnhancedMobileMenu";
 import { NavbarEntranceAnimation, NavItemEntrance } from "./PageLoadAnimation";
 import { Link } from "react-router-dom";
+import { scrollToSection } from "@/lib/scroll-utils";
+import { useActiveSection } from "@/hooks/useActiveSection";
+import { useCommonQueries } from "@/hooks/useResponsive";
 
 interface FloatingNavProps {
   onOpenContact: () => void;
@@ -57,14 +60,22 @@ export default function FloatingNav({
   }, [isDarkMode]);
 
   const navItems = [
-    { label: "Home", href: "/" },
-    { label: "Events We Plan", href: "/services" },
-    { label: "Themes & Décor", href: "/themes" },
-    { label: "Venues", href: "/venues" },
-    { label: "Offers", href: "/offers" },
-    { label: "Gallery", href: "/gallery" },
-    { label: "Contact Us", href: "/contact" },
+    { label: "Home", href: "/", sectionId: "home" },
+    { label: "Events We Plan", href: "/services", sectionId: null },
+    { label: "Cities", href: "#cities", sectionId: "cities" },
+    { label: "Testimonials", href: "#testimonials", sectionId: "testimonials" },
+    { label: "Themes & Décor", href: "/themes", sectionId: null },
+    { label: "Venues", href: "/venues", sectionId: null },
+    { label: "Offers", href: "/offers", sectionId: null },
+    { label: "Gallery", href: "/gallery", sectionId: null },
+    { label: "Contact Us", href: "/contact", sectionId: null },
   ];
+
+  // Track active section for highlighting
+  const activeSection = useActiveSection(["home", "cities", "testimonials"]);
+
+  // Responsive behavior
+  const { isMobile, isTablet } = useCommonQueries();
 
   const cities = ["Guntur", "Hyderabad", "Vijayawada"];
   const eventTypes = ["Birthday", "Marriage", "Corporate", "Engagement"];
@@ -186,22 +197,64 @@ export default function FloatingNav({
           <div className="flex items-center justify-center h-16">
             {/* Desktop Navigation - Centered */}
             <nav className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.href}
-                  className="group relative text-card-foreground hover:text-primary transition-all duration-300 font-medium flex items-center gap-1"
-                  style={{ fontFamily: "Poppins, sans-serif" }}
-                >
-                  <span>{item.label}</span>
+              {navItems.map((item) => {
+                const isActive =
+                  item.sectionId && activeSection === item.sectionId;
+                const isScrollLink = item.href.startsWith("#");
 
-                  {/* Primary color underline on hover */}
-                  <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                if (isScrollLink && item.sectionId) {
+                  return (
+                    <button
+                      key={item.label}
+                      onClick={() => scrollToSection(item.sectionId!)}
+                      className={`group relative transition-all duration-300 font-medium flex items-center gap-1 ${
+                        isActive
+                          ? "text-primary"
+                          : "text-card-foreground hover:text-primary"
+                      }`}
+                      style={{ fontFamily: "Poppins, sans-serif" }}
+                      aria-label={`Navigate to ${item.label} section`}
+                    >
+                      <span>{item.label}</span>
 
-                  {/* Glow effect */}
-                  <div className="absolute inset-0 bg-primary/10 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 -mx-2 -my-1" />
-                </Link>
-              ))}
+                      {/* Active/hover underline */}
+                      <div
+                        className={`absolute -bottom-1 left-0 right-0 h-0.5 bg-primary transition-transform duration-300 ${
+                          isActive
+                            ? "scale-x-100"
+                            : "scale-x-0 group-hover:scale-x-100"
+                        }`}
+                      />
+
+                      {/* Glow effect */}
+                      <div
+                        className={`absolute inset-0 bg-primary/10 rounded-md transition-opacity duration-300 -mx-2 -my-1 ${
+                          isActive
+                            ? "opacity-100"
+                            : "opacity-0 group-hover:opacity-100"
+                        }`}
+                      />
+                    </button>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    className="group relative text-card-foreground hover:text-primary transition-all duration-300 font-medium flex items-center gap-1"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
+                    <span>{item.label}</span>
+
+                    {/* Primary color underline on hover */}
+                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 bg-primary/10 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 -mx-2 -my-1" />
+                  </Link>
+                );
+              })}
             </nav>
           </div>
         </div>

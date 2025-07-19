@@ -17,6 +17,11 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useRef, useState } from "react";
+import { showSuccessToast, showInfoToast } from "@/lib/toast-utils";
+import { trackCitySelection, trackContact } from "@/lib/analytics-utils";
+import { RevealOnScroll, FloatingElement } from "./ParallaxBackground";
+import { useStaggeredAnimation } from "@/hooks/useScrollAnimation";
+import { useCommonQueries } from "@/hooks/useResponsive";
 
 interface City {
   name: string;
@@ -109,6 +114,7 @@ const cities: City[] = [
 
 export default function CityCards() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const { isMobile, isTablet } = useCommonQueries();
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -121,16 +127,29 @@ export default function CityCards() {
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
 
   const handleCityClick = (city: City) => {
+    trackCitySelection(city.name);
     setSelectedCity(city);
     setCurrentImageIndex(0);
   };
 
   const handleCall = () => {
-    window.open("tel:+918919836337", "_self");
+    trackContact("call_initiated", "phone");
+    showInfoToast("Connecting to call...", {
+      description: "You'll be connected to our event planning team.",
+    });
+    setTimeout(() => {
+      window.open("tel:+918919836337", "_self");
+    }, 500);
   };
 
   const handleWhatsApp = () => {
-    window.open("https://wa.me/918919836337", "_blank");
+    trackContact("whatsapp_initiated", "whatsapp");
+    showInfoToast("Opening WhatsApp...", {
+      description: "Chat with us for instant planning assistance.",
+    });
+    setTimeout(() => {
+      window.open("https://wa.me/918919836337", "_blank");
+    }, 500);
   };
 
   const nextImage = () => {
@@ -157,9 +176,9 @@ export default function CityCards() {
         className="absolute inset-0 gradient-mesh opacity-20"
       />
 
-      {/* Floating Particles */}
+      {/* Floating Particles - Reduced on mobile */}
       <div className="absolute inset-0">
-        {Array.from({ length: 20 }).map((_, i) => (
+        {Array.from({ length: isMobile ? 8 : 20 }).map((_, i) => (
           <motion.div
             key={i}
             animate={{
@@ -198,7 +217,10 @@ export default function CityCards() {
             className="w-24 h-1 bg-gradient-to-r from-cinematic-purple to-cinematic-gold mx-auto mb-6 rounded-full"
           />
 
-          <h2 className="text-5xl md:text-6xl font-heading font-bold mb-6">
+          <h2
+            id="cities-heading"
+            className="text-5xl md:text-6xl font-heading font-bold mb-6"
+          >
             Cities Where We
             <span className="block text-shimmer">Create Magic</span>
           </h2>
@@ -209,7 +231,7 @@ export default function CityCards() {
           </p>
         </motion.div>
 
-        {/* City Cards Grid */}
+        {/* City Cards Grid with Staggered Animation */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
           {cities.map((city, index) => (
             <motion.div
@@ -218,7 +240,7 @@ export default function CityCards() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
               viewport={{ once: true }}
-              className="group perspective-1000 h-[500px]"
+              className="group perspective-1000 h-[500px] card-hover"
               onMouseEnter={() => setHoveredCard(index)}
               onMouseLeave={() => setHoveredCard(null)}
             >
